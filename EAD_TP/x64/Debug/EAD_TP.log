@@ -1,2 +1,4 @@
 ﻿  main.c
-  EAD_TP.vcxproj -> C:\Users\João Correia\Desktop\EAD_TP\EAD_TP\x64\Debug\EAD_TP.exe
+C:\Users\João Correia\Desktop\EAD\EAD_TP\main.c(9,1): warning C4005: 'MAXNOME': redefinição de macro
+C:\Users\João Correia\Desktop\EAD\EAD_TP\operacoes.h(4): message : consulte a definição anterior de 'MAXNOME'
+  EAD_TP.vcxproj -> C:\Users\João Correia\Desktop\EAD\EAD_TP\x64\Debug\EAD_TP.exe
