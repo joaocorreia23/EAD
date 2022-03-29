@@ -1,4 +1,10 @@
-﻿  main.c
-C:\Users\João Correia\Desktop\EAD\EAD_TP\main.c(9,1): warning C4005: 'MAXNOME': redefinição de macro
-C:\Users\João Correia\Desktop\EAD\EAD_TP\operacoes.h(4): message : consulte a definição anterior de 'MAXNOME'
+﻿  operacoes.c
+C:\Users\João Correia\Desktop\EAD\EAD_TP\operacoes.c(21,32): warning C4133: '=': tipos incompatíveis - de 'Operacao *' para 'Operacao *'
+C:\Users\João Correia\Desktop\EAD\EAD_TP\operacoes.c(14,1): warning C4133: 'inicializando': tipos incompatíveis - de 'Maquina *' para 'Maquina *'
+C:\Users\João Correia\Desktop\EAD\EAD_TP\operacoes.c(33,28): warning C4133: '=': tipos incompatíveis - de 'Maquina *' para 'Maquina *'
+C:\Users\João Correia\Desktop\EAD\EAD_TP\operacoes.c(34,28): warning C4133: '=': tipos incompatíveis - de 'Operacao *' para 'Operacao *'
+C:\Users\João Correia\Desktop\EAD\EAD_TP\operacoes.c(50,34): warning C4133: '=': tipos incompatíveis - de 'Operacao *' para 'Operacao *'
+C:\Users\João Correia\Desktop\EAD\EAD_TP\operacoes.c(68,33): warning C4133: '=': tipos incompatíveis - de 'Operacao *' para 'Operacao *'
+C:\Users\João Correia\Desktop\EAD\EAD_TP\operacoes.c(73,37): warning C4133: '=': tipos incompatíveis - de 'Operacao *' para 'Operacao *'
+C:\Users\João Correia\Desktop\EAD\EAD_TP\operacoes.c(76,35): warning C4133: '=': tipos incompatíveis - de 'Operacao *' para 'Operacao *'
   EAD_TP.vcxproj -> C:\Users\João Correia\Desktop\EAD\EAD_TP\x64\Debug\EAD_TP.exe

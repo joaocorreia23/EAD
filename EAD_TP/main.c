@@ -20,6 +20,9 @@ mostraMenu() {
 	printf("5. Quantidade Minima de Tempo \n");
 	printf("6. Quantidade Máxima de Tempo \n");
 	printf("7. Quantidade Média de Tempo \n");
+	printf("8. Listar Máquinas \n");
+	printf("9. Listar Trabalhos \n");
+	printf("10. Criar Máquina \n");
 	printf("0. Sair! \n\n");
 
 	printf("*******************************************\n\n");
@@ -33,61 +36,148 @@ close() {
 	exit(0);
 }
 
+//Funções para AutoIncrementar o ID por uma File
+int autoIdJob() {
+	int idJob;
+	FILE* idFile = fopen("idJob.txt", "r");
+	if (!idFile) {
+		idFile = fopen("idJob.txt", "w");
+		if (!idFile) return -1; // fail
+		fprintf(idFile, "%d", 1);
+		fclose(idFile);
+		return 1;
+	}
+	fscanf(idFile, "%d", &idJob);
+	idJob++;
+
+	fclose(idFile); // close file for read
+	idFile = fopen("idJob.txt", "w"); // reopen for write 
+	fprintf(idFile, "%d", idJob);
+	fclose(idFile);
+	return idJob;
+}
+
+int autoIdOp() {
+	int idOp;
+	FILE* idFile = fopen("idOp.txt", "r");
+	if (!idFile) {
+		idFile = fopen("idOp.txt", "w");
+		if (!idFile) return -1; // fail
+		fprintf(idFile, "%d", 1);
+		fclose(idFile);
+		return 1;
+	}
+	fscanf(idFile, "%d", &idOp);
+	idOp++;
+
+	fclose(idFile); // close file for read
+	idFile = fopen("idOp.txt", "w"); // reopen for write
+	fprintf(idFile, "%d", idOp);
+	fclose(idFile);
+	return idOp;
+}
+
+int autoIdMaq() {
+	int idMaq;
+	FILE* idFile = fopen("idMaq.txt", "r");
+	if (!idFile) {
+		idFile = fopen("idMaq.txt", "w");
+		if (!idFile) return -1; // fail
+		fprintf(idFile, "%d", 1);
+		fclose(idFile);
+		return 1;
+	}
+	fscanf(idFile, "%d", &idMaq);
+	idMaq++;
+
+	fclose(idFile); // close file for read
+	idFile = fopen("idMaq.txt", "w"); // reopen for write
+	fprintf(idFile, "%d", idMaq);
+	fclose(idFile);
+	return idMaq;
+}
+
+//Funções para fazer o CRUD das Operações
 Operacao* criaOperacao(Operacao* operacao) {
 	char name MAXNOME;
 	float tempo;
+	int idOp = 0;
+	Maquina *maquinas = NULL;
+
+	idOp = autoIdOp(idOp);
 
 	printf("Nome da Operação: ");
 	scanf("%s", &name);
 
-	printf("Tempo da Operação: ");
-	scanf("%f", &tempo);
-
-
-	return inserirOperacao(operacao, name, tempo);
+	return inserirOperacao(operacao, idOp, name, maquinas);
 }
 
 Operacao* removeOperacao(Operacao* operacao) {
-	char name MAXNOME;
+	int idOp = 0;
 
-	printf("Nome da Operação: ");
-	scanf("%s", &name);
+	printf("ID da Operação: ");
+	scanf("%d", &idOp);
 
 
-	return removerOperacao(operacao, name);
+	return removerOperacao(operacao, idOp);
 }
 
 Operacao* editaOperacao(Operacao* operacao) {
-	char name MAXNOME;
 	char newName MAXNOME;
 	float tempo;
 
-	printf("Nome da Operação Para Editar: ");
-	scanf("%s", &name);
+	int idOp = 0;
+
+	printf("ID da Operação Para Editar: ");
+	scanf("%d", &idOp);
 
 	printf("Novo Nome da Operação: ");
 	scanf("%s", &newName);
 
-	printf("Novo Tempo da Operação: ");
-	scanf("%f", &tempo);
-
-
-	return alterarOperacao(operacao, name, newName, tempo);
+	return alterarOperacao(operacao, idOp, newName);
 }
 
+//Funções para fazer o CRUD das Máquinas
+Maquina* criaMaquina(Maquina* maquina) {
+	char name MAXNOME;
+	float tempoOp;
+	char localizacao MAXNOME;
+	int idMaq = 0;
+
+	idMaq = autoIdOp(idMaq);
+
+	printf("Nome da Máquina: ");
+	scanf("%s", &name);
+
+	printf("Tempo da Máquina: ");
+	scanf("%f", &tempoOp);
+
+	printf("Localização da Máquina: ");
+	scanf("%s", &localizacao);
+
+	return inserirMaquina(maquina, idMaq, name, tempoOp, localizacao);
+}
+
+
 main() {
-	Operacao* op = NULL;
 	int option;
 
 	char* locale;
 	locale = setlocale(LC_ALL, "");
 
+	Job* job = NULL;
+	//job = inserirJob(job, "Trabalho1", "01");
 
-	op = inserirOperacao(op, "00", 10);
-	op = inserirOperacao(op, "01", 10);
-	op = inserirOperacao(op, "02", 10);
-	op = inserirOperacao(op, "03", 10);
-	op = inserirOperacao(op, "04", 10);
+	Maquina* maq = NULL;
+	maq = inserirMaquina(maq, 1, "Máquina1", 3, "Piso1");
+	maq = inserirMaquina(maq, 2, "Máquina1", 7, "Piso1");
+	maq = inserirMaquina(maq, 3, "Máquina1", 5, "Piso1");
+
+	Operacao* op = NULL;
+	op = inserirOperacao(op, 1, "00", maq);
+	op = inserirOperacao(op, 2, "01", maq);
+	op = inserirOperacao(op, 3, "02", maq);
+
 
 	do
 	{
@@ -126,6 +216,20 @@ main() {
 			break;
 
 		case 7:
+			break;
+
+		case 8:
+			listarMaquinas(maq);
+			system("pause");
+			break;
+
+		case 9:
+			listarJobs(job);
+			system("pause");
+			break;
+
+		case 10:
+			maq = criaMaquina(maq);
 			break;
 
 		case 0:

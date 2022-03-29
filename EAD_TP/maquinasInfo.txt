@@ -1,0 +1,6 @@
+Maquina1;3;Piso1
+Maquina2;5;Piso2
+Maquina3;7;Piso3
+Maquina4;4;Piso4
+Maquina5;8;Piso5
+	

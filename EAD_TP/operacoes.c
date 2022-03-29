@@ -10,19 +10,27 @@ void listarOperacoes(Operacao* operacao)
 	printf("********************************************\n\n");
 	while (operacao != NULL)
 	{
-		printf("Nome Operação: %s     Tempo Operação: %.2f\n", operacao->nome, operacao->tempo);
+		printf("ID: %d     Nome Operação: %s\n", operacao->idOp, operacao->nome);
+		Maquina* maqAux = operacao->maquinas;
+		printf("----------------------------------------------------------------------------------------\n");
+		while (maqAux != NULL) {
+			printf("\tID: %d   Nome Máquina: %s     Tempo Máquina: %.2f     Localização: %s\n", maqAux->idMaq, maqAux->nomeMaquina, maqAux->tempoOp, maqAux->localizacao);
+			maqAux = maqAux->seguinte;
+		}
+		printf("----------------------------------------------------------------------------------------\n");
 		operacao = operacao->seguinte;
 	}
 	printf("\n********************************************\n");
 }
 
 // Função para Criar um Novo Registo de uma Nova Operação
-Operacao* inserirOperacao(Operacao* operacao, char nome[], float tempo) {
+Operacao* inserirOperacao(Operacao* operacao, int idOp, char nome[], Maquina* maquinas) {
 	Operacao* nova = (Operacao*)malloc(sizeof(Operacao));
 
 	if (nova != NULL) {
+		nova->idOp = idOp;
 		strcpy(nova->nome, nome);
-		nova->tempo = tempo;
+		nova->maquinas = maquinas;
 		nova->seguinte = operacao;
 		return(nova);
 	}
@@ -32,11 +40,11 @@ Operacao* inserirOperacao(Operacao* operacao, char nome[], float tempo) {
 }
 
 // Função para Alterar uma Operação
-Operacao* alterarOperacao(Operacao* operacao, char nome[], char nomeNovo[], float tempo) {
+Operacao* alterarOperacao(Operacao* operacao, int idOp, char nomeNovo[]) {
 	Operacao* nodoAtual = operacao;
 	Operacao* nodoAnterior;
 
-	while (nodoAtual != NULL && strcmp(nodoAtual->nome, nome) != 0)
+	while (nodoAtual != NULL && nodoAtual->idOp != idOp)
 	{
 		nodoAnterior = nodoAtual;
 		nodoAtual = nodoAtual->seguinte;
@@ -45,28 +53,25 @@ Operacao* alterarOperacao(Operacao* operacao, char nome[], char nomeNovo[], floa
 	if (nodoAtual != NULL)
 	{
 		strcpy(nodoAtual->nome, nomeNovo);
-		nodoAtual->tempo = tempo;
 	}
 
 	return(operacao);
 }
 
-// Função para Remover um Registo de uma Operação pelo Nome
-Operacao* removerOperacao(Operacao* operacao, char nome[]) {
+// Função para Remover um Registo de uma Operação pelo ID
+Operacao* removerOperacao(Operacao* operacao, int idOp) {
 	//Declaração dos nodo's para armazenar a informação das operações
 	Operacao* nodoAtual = operacao;
 	Operacao* nodoAnterior;
 
-	if (strcmp(nodoAtual->nome, nome) == 0)
-	{
+	if (nodoAtual->idOp == idOp) {
 		operacao = nodoAtual->seguinte;
 		free(nodoAtual);
 	}
 	else {
 		nodoAnterior = operacao; // Armazena a informação da operação 
 		nodoAtual = nodoAnterior->seguinte; // Segue para a proxima operação 
-		while ((nodoAtual != NULL) && (strcmp(nodoAtual->nome, nome) != 0))
-		{
+		while ((nodoAtual != NULL) && (nodoAtual->idOp != idOp)) {
 			nodoAnterior = nodoAtual;
 			nodoAtual = nodoAtual->seguinte;
 		}
@@ -77,16 +82,4 @@ Operacao* removerOperacao(Operacao* operacao, char nome[]) {
 		}
 	}
 	return(operacao);
-}
-
-float minimo(Operacao* operacao)
-{
-	float min = 0;
-
-	return 0.0f;
-}
-
-float media(Operacao* operacao)
-{
-	return 0.0f;
 }
