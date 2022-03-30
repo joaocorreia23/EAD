@@ -6,10 +6,10 @@
 
 typedef struct job {
 	int idJob;
-	char nome[MAXNOME];
-	struct Operacao* operacoes;
-	struct Job* seguinte;
+	char nomeJob[MAXNOME];
+	struct operacao* operacoes;
+	struct job* seguinte;
 } Job;
 
-void listarJobs(Job* job);
-Job* inserirJob(Job* trabalho, char nome[], Operacao* operacoes);
+void listarJobs(Job* trabalho);
+Job* inserirJob(Job* trabalho, int idJob, char nomeJob[], Operacao* operacoes);

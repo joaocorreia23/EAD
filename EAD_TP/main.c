@@ -3,30 +3,10 @@
 #include <string.h>
 #include <locale.h>
 #include <conio.h>
-// Include da Página Header para o Job
-#include "job.h"
+// Include da Página Header para o Gui
+#include "gui.h";
 
-#define MAXNOME [40];
-
-mostraMenu() {
-	printf("*******************************************\n");
-	printf("*                   MENU                  *\n");
-	printf("*******************************************\n\n");
-
-	printf("1. Listar Operações \n");
-	printf("2. Inserir Nova Operação \n");
-	printf("3. Remover Operação \n");
-	printf("4. Alterar Operação \n");
-	printf("5. Quantidade Minima de Tempo \n");
-	printf("6. Quantidade Máxima de Tempo \n");
-	printf("7. Quantidade Média de Tempo \n");
-	printf("8. Listar Máquinas \n");
-	printf("9. Listar Trabalhos \n");
-	printf("10. Criar Máquina \n");
-	printf("0. Sair! \n\n");
-
-	printf("*******************************************\n\n");
-}
+#define MAXNOME 40
 
 close() {
 	printf("*******************************************\n");
@@ -99,15 +79,17 @@ int autoIdMaq() {
 
 //Funções para fazer o CRUD das Operações
 Operacao* criaOperacao(Operacao* operacao) {
-	char name MAXNOME;
+	char name[MAXNOME];
 	float tempo;
 	int idOp = 0;
-	Maquina *maquinas = NULL;
+	Maquina* maquinas = NULL;
 
 	idOp = autoIdOp(idOp);
 
 	printf("Nome da Operação: ");
 	scanf("%s", &name);
+
+	printf("Nome da Operação: ");
 
 	return inserirOperacao(operacao, idOp, name, maquinas);
 }
@@ -123,7 +105,7 @@ Operacao* removeOperacao(Operacao* operacao) {
 }
 
 Operacao* editaOperacao(Operacao* operacao) {
-	char newName MAXNOME;
+	char newName[MAXNOME];
 	float tempo;
 
 	int idOp = 0;
@@ -139,9 +121,9 @@ Operacao* editaOperacao(Operacao* operacao) {
 
 //Funções para fazer o CRUD das Máquinas
 Maquina* criaMaquina(Maquina* maquina) {
-	char name MAXNOME;
+	char name[MAXNOME];
 	float tempoOp;
-	char localizacao MAXNOME;
+	char localizacao[MAXNOME];
 	int idMaq = 0;
 
 	idMaq = autoIdOp(idMaq);
@@ -161,75 +143,163 @@ Maquina* criaMaquina(Maquina* maquina) {
 
 main() {
 	int option;
+	int subOption;
 
 	char* locale;
 	locale = setlocale(LC_ALL, "");
 
-	Job* job = NULL;
-	//job = inserirJob(job, "Trabalho1", "01");
-
 	Maquina* maq = NULL;
 	maq = inserirMaquina(maq, 1, "Máquina1", 3, "Piso1");
-	maq = inserirMaquina(maq, 2, "Máquina1", 7, "Piso1");
-	maq = inserirMaquina(maq, 3, "Máquina1", 5, "Piso1");
+	maq = inserirMaquina(maq, 2, "Máquina2", 7, "Piso1");
+	//maq = inserirMaquina(maq, 3, "Máquina3", 5, "Piso1");
 
 	Operacao* op = NULL;
-	op = inserirOperacao(op, 1, "00", maq);
-	op = inserirOperacao(op, 2, "01", maq);
-	op = inserirOperacao(op, 3, "02", maq);
+	op = inserirOperacao(op, 1, "00");
+	op = inserirOperacao(op, 2, "01");
+	op = inserirOperacao(op, 3, "02");
+
+	op = associarMaquina(op, 1, 1);
+	op = associarMaquina(op, 1, 2);
+	op = associarMaquina(op, 2, 2);
+	op = associarMaquina(op, 3, 2);
+
+	Job* job = NULL;
+	//job = inserirJob(job, 1, "Trabalho1", op);
+	//job = inserirJob(job, 2, "Trabalho2", op);
+	//job = inserirJob(job, 3, "Trabalho3", op);
+	//job = inserirJob(job, 10, "TrabalhoTeste", op);
 
 
 	do
 	{
 		mostraMenu();
 
-		printf("Opção: ");
 		scanf("%d", &option);
 
 		system("cls");
 
 		switch (option)
 		{
+
+			// MENU MÁQUINA
 		case 1:
-			listarOperacoes(op);
-			system("pause");
+			do
+			{
+				mostraMaquinasMenu();
+
+				scanf("%d", &subOption);
+				system("cls");
+
+				switch (subOption)
+				{
+
+				case 1:
+					listarMaquinas(maq);
+					system("pause");
+					break;
+
+				case 2:
+					maq = criaMaquina(maq);
+					system("pause");
+					break;
+
+				case 0:
+					subOption = 0;
+					break;
+
+				default:
+					printf("Opção Inválida\n\n");
+					system("pause");
+					break;
+				}
+
+				system("cls");
+			} while (subOption != 0);
 			break;
 
+			// MENU OPERAÇÕES
 		case 2:
-			op = criaOperacao(op);
+			do
+			{
+				mostraOperacoesMenu();
+
+				scanf("%d", &subOption);
+				system("cls");
+
+				switch (subOption)
+				{
+				case 1:
+					listarOperacoes(op, maq);
+					system("pause");
+					break;
+
+				case 2:
+					op = criaOperacao(op);
+					system("pause");
+					break;
+
+				case 3:
+					op = removeOperacao(op);
+					system("pause");
+					break;
+
+				case 4:
+					op = editaOperacao(op);
+					system("pause");
+					break;
+
+				case 5:
+					op = associaMaquina(op, maq);
+					system("pause");
+					break;
+
+				case 6:
+					op = desassociaMaquina(op, maq);
+					system("pause");
+					break;
+
+				case 0:
+					subOption = 0;
+					break;
+
+				default:
+					printf("Opção Inválida\n\n");
+					system("pause");
+					break;
+				}
+
+				system("cls");
+			} while (subOption != 0);
 			break;
 
+			// MENU TRABALHOS
 		case 3:
-			listarOperacoes(op);
-			op = removeOperacao(op);
-			break;
+			do
+			{
+				mostraTrabalhosMenu();
 
-		case 4:
-			listarOperacoes(op);
-			op = editaOperacao(op);
-			break;
+				scanf("%d", &subOption);
+				system("cls");
 
-		case 5:
-			break;
+				switch (subOption)
+				{
+				case 1:
+					listarJobs(job);
+					system("pause");
+					break;
 
-		case 6:
-			break;
+				case 0:
+					subOption = 0;
+					break;
 
-		case 7:
-			break;
+				default:
+					printf("Opção Inválida\n\n");
+					system("pause");
+					break;
+				}
 
-		case 8:
-			listarMaquinas(maq);
-			system("pause");
-			break;
-
-		case 9:
-			listarJobs(job);
-			system("pause");
-			break;
-
-		case 10:
-			maq = criaMaquina(maq);
+				system("cls");
+			} while (subOption != 0);
 			break;
 
 		case 0:

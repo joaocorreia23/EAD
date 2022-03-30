@@ -3,7 +3,7 @@
 #include "operacoes.h"
 
 // Função para Listar todas as Operações
-void listarOperacoes(Operacao* operacao)
+void listarOperacoes(Operacao* operacao, Maquina* maquina)
 {
 	printf("********************************************\n");
 	printf("*            LISTA DE OPERAÇÕES            *\n");
@@ -11,12 +11,24 @@ void listarOperacoes(Operacao* operacao)
 	while (operacao != NULL)
 	{
 		printf("ID: %d     Nome Operação: %s\n", operacao->idOp, operacao->nome);
-		Maquina* maqAux = operacao->maquinas;
+		OperacaoMaquina* opMaqAux = operacao->maquinas;
 		printf("----------------------------------------------------------------------------------------\n");
-		while (maqAux != NULL) {
-			printf("\tID: %d   Nome Máquina: %s     Tempo Máquina: %.2f     Localização: %s\n", maqAux->idMaq, maqAux->nomeMaquina, maqAux->tempoOp, maqAux->localizacao);
-			maqAux = maqAux->seguinte;
+		while (opMaqAux != NULL)
+		{
+			Maquina* maqAux = maquina;
+			while (maqAux != NULL && maqAux->idMaq != opMaqAux->idMaq)
+				maqAux = maqAux->seguinte;
+
+			if (maqAux != NULL)
+				printf("\tID: %d   Nome Máquina: %s     Tempo Máquina: %.2f     Localização: %s\n", maqAux->idMaq, maqAux->nomeMaquina, maqAux->tempoOp, maqAux->localizacao);
+
+
+			opMaqAux = opMaqAux->seguinte;
 		}
+		/*	while (maqAux != NULL) {
+				printf("\tID: %d   Nome Máquina: %s     Tempo Máquina: %.2f     Localização: %s\n", maqAux->idMaq, maqAux->nomeMaquina, maqAux->tempoOp, maqAux->localizacao);
+				maqAux = maqAux->seguinte;
+			}*/
 		printf("----------------------------------------------------------------------------------------\n");
 		operacao = operacao->seguinte;
 	}
@@ -24,13 +36,13 @@ void listarOperacoes(Operacao* operacao)
 }
 
 // Função para Criar um Novo Registo de uma Nova Operação
-Operacao* inserirOperacao(Operacao* operacao, int idOp, char nome[], Maquina* maquinas) {
+Operacao* inserirOperacao(Operacao* operacao, int idOp, char nome[]) {
 	Operacao* nova = (Operacao*)malloc(sizeof(Operacao));
 
 	if (nova != NULL) {
 		nova->idOp = idOp;
 		strcpy(nova->nome, nome);
-		nova->maquinas = maquinas;
+		nova->maquinas = NULL;
 		nova->seguinte = operacao;
 		return(nova);
 	}
@@ -82,4 +94,65 @@ Operacao* removerOperacao(Operacao* operacao, int idOp) {
 		}
 	}
 	return(operacao);
+}
+
+
+Operacao* associarMaquina(Operacao* operacao, int idOp, int idMaq) {
+	Operacao* nodoAtualOperacao = operacao;
+	Operacao* nodoAnteriorOperacao;
+
+	while (nodoAtualOperacao != NULL && nodoAtualOperacao->idOp != idOp)
+	{
+		nodoAnteriorOperacao = nodoAtualOperacao;
+		nodoAtualOperacao = nodoAtualOperacao->seguinte;
+	}
+
+	if (nodoAtualOperacao != NULL)
+	{
+		OperacaoMaquina* nova = (OperacaoMaquina*)malloc(sizeof(OperacaoMaquina));
+		nova->idMaq = idMaq;
+		nova->idOp = idOp;
+		nova->seguinte = nodoAtualOperacao->maquinas;
+
+		nodoAtualOperacao->maquinas = nova;
+	}
+
+	return operacao;
+}
+
+Operacao* desassociarMaquina(Operacao* operacao, int idOp, int idMaq) {
+	Operacao* nodoAtualOperacao = operacao;
+	Operacao* nodoAnteriorOperacao;
+
+	while (nodoAtualOperacao != NULL && nodoAtualOperacao->idOp != idOp)
+	{
+		nodoAnteriorOperacao = nodoAtualOperacao;
+		nodoAtualOperacao = nodoAtualOperacao->seguinte;
+	}
+
+	if (nodoAtualOperacao != NULL)
+	{
+		OperacaoMaquina* nodoAtualOperacaoMaquina = nodoAtualOperacao->maquinas;
+		OperacaoMaquina* nodoAnteriorOperacaoMaquina;
+
+		if (nodoAtualOperacaoMaquina->idOp == idOp) {
+			nodoAtualOperacao->maquinas = nodoAtualOperacaoMaquina->seguinte;
+			free(nodoAtualOperacaoMaquina);
+		}
+		else {
+			nodoAnteriorOperacaoMaquina = operacao; // Armazena a informação da operação 
+			nodoAtualOperacaoMaquina = nodoAnteriorOperacaoMaquina->seguinte; // Segue para a proxima operação 
+			while ((nodoAtualOperacaoMaquina != NULL) && (nodoAtualOperacaoMaquina->idOp != idOp)) {
+				nodoAnteriorOperacaoMaquina = nodoAtualOperacaoMaquina;
+				nodoAtualOperacaoMaquina = nodoAtualOperacaoMaquina->seguinte;
+			}
+			if (nodoAtualOperacaoMaquina != NULL)
+			{
+				nodoAnteriorOperacaoMaquina->seguinte = nodoAtualOperacaoMaquina->seguinte;
+				free(nodoAtualOperacaoMaquina);
+			}
+		}
+	}
+
+	return operacao;
 }

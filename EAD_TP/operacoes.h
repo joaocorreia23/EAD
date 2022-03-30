@@ -7,11 +7,19 @@
 typedef struct operacao {
 	int idOp;
 	char nome[MAXNOME];
-	struct Maquina* maquinas;
-	struct Operacao* seguinte;
+	struct operacaomaquina* maquinas;
+	struct operacao* seguinte;
 } Operacao;
 
-void listarOperacoes(Operacao* operacao);
-Operacao* inserirOperacao(Operacao* operacao, int idOp, char nome[], Maquina* maquinas);
+typedef struct operacaomaquina {
+	int idOp;
+	int idMaq;
+	struct operacaomaquina* seguinte;
+} OperacaoMaquina;
+
+void listarOperacoes(Operacao* operacao, Maquina* maquina);
+Operacao* inserirOperacao(Operacao* operacao, int idOp, char nome[]);
 Operacao* removerOperacao(Operacao* operacao, int idOp);
 Operacao* alterarOperacao(Operacao* operacao, int idOp, char nomeNovo[]);
+Operacao* associarMaquina(Operacao* operacao, int idOp, int idMaq);
+Operacao* desassociarMaquina(Operacao* operacao, int idOp, int idMaq);

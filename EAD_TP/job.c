@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include "job.h"
 
-// Função para Listar todas as Máquinas
+// Função para Listar todos os Jobs
 void listarJobs(Job* trabalho)
 {
 	printf("***************************************************************************\n");
@@ -10,18 +10,37 @@ void listarJobs(Job* trabalho)
 	printf("***************************************************************************\n\n");
 	while (trabalho != NULL)
 	{
-		printf("Nome Trabalho: %s     Operações: %s\n", trabalho->nome, trabalho->operacoes);
+		printf("ID JOB: %d   Nome Trabalho: %s\n", trabalho->idJob, trabalho->nomeJob);
+		Operacao* opAux = trabalho->operacoes;
+		printf("----------------------------------------------------------------------------------------\n");
+		while (opAux != NULL) {
+			printf("\tID: %d     Nome Operação: %s\n", opAux->idOp, opAux->nome);
+
+			Maquina* maqAux = opAux->maquinas;
+			printf("----------------------------------------------------------------------------------------\n");
+			while (maqAux != NULL) {
+				printf("\t\tID: %d   Nome Máquina: %s     Tempo Máquina: %.2f     Localização: %s\n", maqAux->idMaq, maqAux->nomeMaquina, maqAux->tempoOp, maqAux->localizacao);
+				maqAux = maqAux->seguinte;
+			}
+			printf("----------------------------------------------------------------------------------------\n");
+
+			opAux = opAux->seguinte;
+		}
+		printf("----------------------------------------------------------------------------------------\n");
 		trabalho = trabalho->seguinte;
 	}
 	printf("\n***************************************************************************\n");
 }
 
-Job* inserirJob(Job* trabalho, char nome[], Operacao* operacoes) {
+// Função para Adicionar Jobs
+Job* inserirJob(Job* trabalho, int idJob, char nomeJob[], Operacao* operacoes) {
 	Job* novo = (Job*)malloc(sizeof(Job));
 
 	if (novo != NULL) {
-		strcpy(novo->nome, nome);
-		novo->operacoes;
+		novo->idJob = idJob;
+		strcpy(novo->nomeJob, nomeJob);
+		novo->operacoes = operacoes;
+		novo->seguinte = trabalho;
 		return(novo);
 	}
 	else {
