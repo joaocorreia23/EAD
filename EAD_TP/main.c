@@ -8,30 +8,22 @@
 
 #define MAXNOME 40
 
-close() {
-	printf("*******************************************\n");
-	printf("*           Até Breve, Obrigado!          *\n");
-	printf("*******************************************\n");
-
-	exit(0);
-}
-
 //Funções para AutoIncrementar o ID por uma File
 int autoIdJob() {
 	int idJob;
 	FILE* idFile = fopen("idJob.txt", "r");
 	if (!idFile) {
 		idFile = fopen("idJob.txt", "w");
-		if (!idFile) return -1; // fail
+		if (!idFile) return -1; // Erro
 		fprintf(idFile, "%d", 1);
 		fclose(idFile);
 		return 1;
 	}
-	fscanf(idFile, "%d", &idJob);
+	fscanf(idFile, "%d", &idJob); // Lê o ID e Incrementa 1 Valor
 	idJob++;
 
-	fclose(idFile); // close file for read
-	idFile = fopen("idJob.txt", "w"); // reopen for write 
+	fclose(idFile); // Fecha a File
+	idFile = fopen("idJob.txt", "w"); // Reabre a File
 	fprintf(idFile, "%d", idJob);
 	fclose(idFile);
 	return idJob;
@@ -42,16 +34,16 @@ int autoIdOp() {
 	FILE* idFile = fopen("idOp.txt", "r");
 	if (!idFile) {
 		idFile = fopen("idOp.txt", "w");
-		if (!idFile) return -1; // fail
+		if (!idFile) return -1; // Erro
 		fprintf(idFile, "%d", 1);
 		fclose(idFile);
 		return 1;
 	}
-	fscanf(idFile, "%d", &idOp);
+	fscanf(idFile, "%d", &idOp); // Lê o ID e Incrementa 1 Valor
 	idOp++;
 
-	fclose(idFile); // close file for read
-	idFile = fopen("idOp.txt", "w"); // reopen for write
+	fclose(idFile); // Fecha a File
+	idFile = fopen("idOp.txt", "w"); // Reabre a File
 	fprintf(idFile, "%d", idOp);
 	fclose(idFile);
 	return idOp;
@@ -62,16 +54,16 @@ int autoIdMaq() {
 	FILE* idFile = fopen("idMaq.txt", "r");
 	if (!idFile) {
 		idFile = fopen("idMaq.txt", "w");
-		if (!idFile) return -1; // fail
+		if (!idFile) return -1; // Erro
 		fprintf(idFile, "%d", 1);
 		fclose(idFile);
 		return 1;
 	}
-	fscanf(idFile, "%d", &idMaq);
+	fscanf(idFile, "%d", &idMaq); // Lê o ID e Incrementa 1 Valor
 	idMaq++;
 
-	fclose(idFile); // close file for read
-	idFile = fopen("idMaq.txt", "w"); // reopen for write
+	fclose(idFile); // Fecha a File
+	idFile = fopen("idMaq.txt", "w"); // Reabre a File
 	fprintf(idFile, "%d", idMaq);
 	fclose(idFile);
 	return idMaq;
@@ -148,27 +140,28 @@ main() {
 	char* locale;
 	locale = setlocale(LC_ALL, "");
 
+	//Inserção de Máquinas Predefinidas
 	Maquina* maq = NULL;
 	maq = inserirMaquina(maq, 1, "Máquina1", 3, "Piso1");
 	maq = inserirMaquina(maq, 2, "Máquina2", 7, "Piso1");
-	//maq = inserirMaquina(maq, 3, "Máquina3", 5, "Piso1");
+	maq = inserirMaquina(maq, 3, "Máquina3", 5, "Piso1");
 
+	//Inserção de Operações Predefinidas
 	Operacao* op = NULL;
 	op = inserirOperacao(op, 1, "00");
 	op = inserirOperacao(op, 2, "01");
 	op = inserirOperacao(op, 3, "02");
 
+	//Associação de Operações a Máquinas Predefinidas
 	op = associarMaquina(op, 1, 1);
 	op = associarMaquina(op, 1, 2);
 	op = associarMaquina(op, 2, 2);
+	op = associarMaquina(op, 2, 3);
 	op = associarMaquina(op, 3, 2);
 
+	//Inserção de Jobs Predefinidos
 	Job* job = NULL;
-	//job = inserirJob(job, 1, "Trabalho1", op);
-	//job = inserirJob(job, 2, "Trabalho2", op);
-	//job = inserirJob(job, 3, "Trabalho3", op);
-	//job = inserirJob(job, 10, "TrabalhoTeste", op);
-
+	job = inserirJob(job, 1, "Trabalho1", op);
 
 	do
 	{
@@ -284,7 +277,23 @@ main() {
 				switch (subOption)
 				{
 				case 1:
-					listarJobs(job);
+					listarJobs(job, maq);
+					system("pause");
+					break;
+				case 2:
+					minimoTempo(job, 1, maq);
+					system("pause");
+					break;
+				case 3:
+					maximoTempo(job, 1, maq);
+					system("pause");
+					break;
+				case 4:
+					mediaTempo(job, 1, maq);
+					system("pause");
+					break;
+				case 5:
+					exportarJob(job, maq);
 					system("pause");
 					break;
 

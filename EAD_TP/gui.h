@@ -6,6 +6,7 @@ void mostraMenu();
 void mostraMaquinasMenu();
 void mostraOperacoesMenu();
 void mostraTrabalhosMenu();
+void close();
 
 Operacao* associaMaquina(Operacao* operacao, Maquina* maquinas);
 Operacao* desassociaMaquina(Operacao* operacao, Maquina* maquinas);

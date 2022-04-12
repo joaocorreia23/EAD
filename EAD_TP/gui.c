@@ -61,11 +61,23 @@ void mostraTrabalhosMenu() {
 	printf("*******************************************\n\n");
 
 	printf("1. Listar Trabalhos \n");
+	printf("2. Minimo Tempo de um Trabalho \n");
+	printf("3. Máximo Tempo de um Trabalho \n");
+	printf("4. Média Tempo de um Trabalho \n");
+	printf("5. Exportar Trabalho \n");
 	printf("0. Sair! \n\n");
 
 	printf("*******************************************\n\n");
 
 	printf("Opção: ");
+}
+
+void close() {
+	printf("*******************************************\n");
+	printf("*           Até Breve, Obrigado!          *\n");
+	printf("*******************************************\n");
+
+	exit(0);
 }
 
 #pragma endregion
@@ -99,8 +111,6 @@ Operacao* desassociaMaquina(Operacao* operacao, Maquina* maquina) {
 	printf("ID da Operação: ");
 	scanf("%d", &idOp);
 
-
-	listarMaquinas(maquina);
 
 	printf("ID da Máquina Para Desassociar: ");
 	scanf("%d", &idMaq);

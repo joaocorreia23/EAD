@@ -20,15 +20,10 @@ void listarOperacoes(Operacao* operacao, Maquina* maquina)
 				maqAux = maqAux->seguinte;
 
 			if (maqAux != NULL)
-				printf("\tID: %d   Nome Máquina: %s     Tempo Máquina: %.2f     Localização: %s\n", maqAux->idMaq, maqAux->nomeMaquina, maqAux->tempoOp, maqAux->localizacao);
-
+				printf("\t\tID: %d   Nome Máquina: %s     Tempo Máquina: %.2f     Localização: %s\n", maqAux->idMaq, maqAux->nomeMaquina, maqAux->tempoOp, maqAux->localizacao);
 
 			opMaqAux = opMaqAux->seguinte;
 		}
-		/*	while (maqAux != NULL) {
-				printf("\tID: %d   Nome Máquina: %s     Tempo Máquina: %.2f     Localização: %s\n", maqAux->idMaq, maqAux->nomeMaquina, maqAux->tempoOp, maqAux->localizacao);
-				maqAux = maqAux->seguinte;
-			}*/
 		printf("----------------------------------------------------------------------------------------\n");
 		operacao = operacao->seguinte;
 	}
@@ -96,7 +91,7 @@ Operacao* removerOperacao(Operacao* operacao, int idOp) {
 	return(operacao);
 }
 
-
+// Função para Associar um Maquina a uma Operação
 Operacao* associarMaquina(Operacao* operacao, int idOp, int idMaq) {
 	Operacao* nodoAtualOperacao = operacao;
 	Operacao* nodoAnteriorOperacao;
@@ -120,6 +115,7 @@ Operacao* associarMaquina(Operacao* operacao, int idOp, int idMaq) {
 	return operacao;
 }
 
+// Função para Dessassociar um Maquina a uma Operação
 Operacao* desassociarMaquina(Operacao* operacao, int idOp, int idMaq) {
 	Operacao* nodoAtualOperacao = operacao;
 	Operacao* nodoAnteriorOperacao;
@@ -135,14 +131,14 @@ Operacao* desassociarMaquina(Operacao* operacao, int idOp, int idMaq) {
 		OperacaoMaquina* nodoAtualOperacaoMaquina = nodoAtualOperacao->maquinas;
 		OperacaoMaquina* nodoAnteriorOperacaoMaquina;
 
-		if (nodoAtualOperacaoMaquina->idOp == idOp) {
+		if (nodoAtualOperacaoMaquina->idMaq == idMaq) {
 			nodoAtualOperacao->maquinas = nodoAtualOperacaoMaquina->seguinte;
 			free(nodoAtualOperacaoMaquina);
 		}
 		else {
-			nodoAnteriorOperacaoMaquina = operacao; // Armazena a informação da operação 
+			nodoAnteriorOperacaoMaquina = nodoAtualOperacao->maquinas; // Armazena a informação da operação 
 			nodoAtualOperacaoMaquina = nodoAnteriorOperacaoMaquina->seguinte; // Segue para a proxima operação 
-			while ((nodoAtualOperacaoMaquina != NULL) && (nodoAtualOperacaoMaquina->idOp != idOp)) {
+			while ((nodoAtualOperacaoMaquina != NULL) && (nodoAtualOperacaoMaquina->idMaq != idMaq)) {
 				nodoAnteriorOperacaoMaquina = nodoAtualOperacaoMaquina;
 				nodoAtualOperacaoMaquina = nodoAtualOperacaoMaquina->seguinte;
 			}
