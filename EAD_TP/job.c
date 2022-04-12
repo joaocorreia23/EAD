@@ -261,8 +261,8 @@ void mediaTempo(Job* trabalho, int idJob, Maquina* maquina) {
 					printf("A OPERAÇÃO NÃO TEM MÁQUINAS ASSOCIADAS\n");
 					printf("----------------------------------------------------------------------------------------\n");
 				}
-				
-				
+
+
 				listaDeOperacoes = listaDeOperacoes->seguinte;
 			}
 		}
@@ -270,15 +270,18 @@ void mediaTempo(Job* trabalho, int idJob, Maquina* maquina) {
 	}
 }
 
+//Função Para Exportar todos os Dados de um Job
 void exportarJob(Job* trabalho, Maquina* maquina) {
 
+	remove("JobExported.txt");
+
 	FILE* exportFile = fopen("JobExported.txt", "a");
-	
+
 	Job* jobAux = trabalho;
 
-	fprintf(exportFile, "***************************************************************************\n");
-	fprintf(exportFile, "*                            LISTA DE TRABALHOS                           *\n");
-	fprintf(exportFile, "***************************************************************************\n\n");
+	fprintf(exportFile, "*************************************************************************************************\n");
+	fprintf(exportFile, "*                                     LISTA DE TRABALHOS                                        *\n");
+	fprintf(exportFile, "*************************************************************************************************\n\n");
 
 	while (jobAux != NULL)
 	{
@@ -305,10 +308,13 @@ void exportarJob(Job* trabalho, Maquina* maquina) {
 
 			opAux = opAux->seguinte;
 		}
-		fprintf(exportFile, "----------------------------------------------------------------------------------------\n");
 		jobAux = jobAux->seguinte;
 	}
-	fprintf(exportFile, "\n***************************************************************************\n");
+	fprintf(exportFile, "\n************************************************************************************************\n");
 
 	fclose(exportFile);
+
+	printf("****************************************************************\n");
+	printf("*                 TRABALHO EXPORTADO COM SUCESSO               *\n");
+	printf("****************************************************************\n");
 }
