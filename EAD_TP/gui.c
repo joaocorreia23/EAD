@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <stdlib.h>
-
 #include "gui.h"
 
 
@@ -84,6 +83,46 @@ void close() {
 
 
 #pragma region OPERAÇÕES
+//Funções para fazer o CRUD das Operações
+
+Operacao* criaOperacao(Operacao* operacao) {
+	char name[MAXNOME];
+	float tempo;
+	int idOp = 0;
+	Maquina* maquinas = NULL;
+
+	idOp = autoIdOp(idOp);
+
+	printf("Nome da Operação: ");
+	scanf("%s", &name);
+
+	return inserirOperacao(operacao, idOp, name, maquinas);
+}
+
+Operacao* removeOperacao(Operacao* operacao) {
+	int idOp = 0;
+
+	printf("ID da Operação: ");
+	scanf("%d", &idOp);
+
+
+	return removerOperacao(operacao, idOp);
+}
+
+Operacao* editaOperacao(Operacao* operacao) {
+	char newName[MAXNOME];
+	float tempo;
+
+	int idOp = 0;
+
+	printf("ID da Operação Para Editar: ");
+	scanf("%d", &idOp);
+
+	printf("Novo Nome da Operação: ");
+	scanf("%s", &newName);
+
+	return alterarOperacao(operacao, idOp, newName);
+}
 
 Operacao* associaMaquina(Operacao* operacao, Maquina* maquina) {
 	int idMaq, idOp = 0;
@@ -121,3 +160,27 @@ Operacao* desassociaMaquina(Operacao* operacao, Maquina* maquina) {
 
 #pragma endregion
 
+#pragma region MÁQUINAS
+//Funções para fazer o CRUD das Máquinas
+
+Maquina* criaMaquina(Maquina* maquina) {
+	char name[MAXNOME];
+	float tempoOp;
+	char localizacao[MAXNOME];
+	int idMaq = 0;
+
+	idMaq = autoIdOp(idMaq);
+
+	printf("Nome da Máquina: ");
+	scanf("%s", &name);
+
+	printf("Tempo da Máquina: ");
+	scanf("%f", &tempoOp);
+
+	printf("Localização da Máquina: ");
+	scanf("%s", &localizacao);
+
+	return inserirMaquina(maquina, idMaq, name, tempoOp, localizacao);
+}
+
+#pragma endregion

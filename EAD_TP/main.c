@@ -8,7 +8,7 @@
 
 #define MAXNOME 40
 
-//Funções para AutoIncrementar o ID por uma File
+//Funções para AutoIncrementar os ID's por uma File
 int autoIdJob() {
 	int idJob;
 	FILE* idFile = fopen("idJob.txt", "r");
@@ -69,67 +69,6 @@ int autoIdMaq() {
 	return idMaq;
 }
 
-//Funções para fazer o CRUD das Operações
-Operacao* criaOperacao(Operacao* operacao) {
-	char name[MAXNOME];
-	float tempo;
-	int idOp = 0;
-	Maquina* maquinas = NULL;
-
-	idOp = autoIdOp(idOp);
-	
-	printf("Nome da Operação: ");
-	scanf("%s", &name);
-
-	return inserirOperacao(operacao, idOp, name, maquinas);
-}
-
-Operacao* removeOperacao(Operacao* operacao) {
-	int idOp = 0;
-
-	printf("ID da Operação: ");
-	scanf("%d", &idOp);
-
-
-	return removerOperacao(operacao, idOp);
-}
-
-Operacao* editaOperacao(Operacao* operacao) {
-	char newName[MAXNOME];
-	float tempo;
-
-	int idOp = 0;
-
-	printf("ID da Operação Para Editar: ");
-	scanf("%d", &idOp);
-
-	printf("Novo Nome da Operação: ");
-	scanf("%s", &newName);
-
-	return alterarOperacao(operacao, idOp, newName);
-}
-
-//Funções para fazer o CRUD das Máquinas
-Maquina* criaMaquina(Maquina* maquina) {
-	char name[MAXNOME];
-	float tempoOp;
-	char localizacao[MAXNOME];
-	int idMaq = 0;
-
-	idMaq = autoIdOp(idMaq);
-
-	printf("Nome da Máquina: ");
-	scanf("%s", &name);
-
-	printf("Tempo da Máquina: ");
-	scanf("%f", &tempoOp);
-
-	printf("Localização da Máquina: ");
-	scanf("%s", &localizacao);
-
-	return inserirMaquina(maquina, idMaq, name, tempoOp, localizacao);
-}
-
 
 main() {
 	int option;
@@ -140,9 +79,9 @@ main() {
 
 	//Inserção de Máquinas Predefinidas
 	Maquina* maq = NULL;
-	maq = inserirMaquina(maq, 1, "Máquina1", 3, "Piso1");
-	maq = inserirMaquina(maq, 2, "Máquina2", 7, "Piso1");
-	maq = inserirMaquina(maq, 3, "Máquina3", 5, "Piso1");
+	maq = inserirMaquina(maq, 1, "Maquina1", 3, "Piso1");
+	maq = inserirMaquina(maq, 2, "Maquina2", 7, "Piso1");
+	maq = inserirMaquina(maq, 3, "Maquina3", 5, "Piso1");
 
 	//Inserção de Operações Predefinidas
 	Operacao* op = NULL;
