@@ -102,6 +102,8 @@ Operacao* criaOperacao(Operacao* operacao) {
 Operacao* removeOperacao(Operacao* operacao) {
 	int idOp = 0;
 
+	listarApenasOperacoes(operacao);
+
 	printf("ID da Operação: ");
 	scanf("%d", &idOp);
 
@@ -114,6 +116,8 @@ Operacao* editaOperacao(Operacao* operacao) {
 	float tempo;
 
 	int idOp = 0;
+
+	listarApenasOperacoes(operacao);
 
 	printf("ID da Operação Para Editar: ");
 	scanf("%d", &idOp);

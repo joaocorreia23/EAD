@@ -71,32 +71,35 @@ int autoIdMaq() {
 
 
 main() {
+	// Variáveis para Escolha da Opção dos Menus e SubMenus
 	int option;
 	int subOption;
 
+	// Definição de Locale como LC_ALL para UTF-8 
+	// Permite assim caracteres especiais na Consola de Debug
 	char* locale;
 	locale = setlocale(LC_ALL, "");
 
-	//Inserção de Máquinas Predefinidas
+	// Inserção de Máquinas Predefinidas
 	Maquina* maq = NULL;
 	maq = inserirMaquina(maq, 1, "Maquina1", 3, "Piso1");
 	maq = inserirMaquina(maq, 2, "Maquina2", 7, "Piso1");
 	maq = inserirMaquina(maq, 3, "Maquina3", 5, "Piso1");
 
-	//Inserção de Operações Predefinidas
+	// Inserção de Operações Predefinidas
 	Operacao* op = NULL;
 	op = inserirOperacao(op, 1, "1");
 	op = inserirOperacao(op, 2, "2");
 	op = inserirOperacao(op, 3, "3");
 
-	//Associação de Operações a Máquinas Predefinidas
+	// Associação de Operações a Máquinas Predefinidas
 	op = associarMaquina(op, 1, 1);
 	op = associarMaquina(op, 1, 2);
 	op = associarMaquina(op, 2, 2);
 	op = associarMaquina(op, 2, 3);
 	op = associarMaquina(op, 3, 2);
 
-	//Inserção de Jobs Predefinidos
+	// Inserção de Jobs Predefinidos
 	Job* job = NULL;
 	job = inserirJob(job, 1, "Trabalho1", op);
 

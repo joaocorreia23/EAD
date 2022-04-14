@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include "operacoes.h"
 
-// Função para Listar todas as Operações
+// Função para Listar todas as Operações e Máquinas
 void listarOperacoes(Operacao* operacao, Maquina* maquina)
 {
 	printf("********************************************\n");
@@ -30,6 +30,21 @@ void listarOperacoes(Operacao* operacao, Maquina* maquina)
 			}
 		}
 		printf("----------------------------------------------------------------------------------------\n");
+		operacao = operacao->seguinte;
+	}
+	printf("\n********************************************\n");
+}
+
+// Função para Listar todas as Operações Apenas
+void listarApenasOperacoes(Operacao* operacao) {
+	printf("********************************************\n");
+	printf("*            LISTA DE OPERAÇÕES            *\n");
+	printf("********************************************\n\n");
+	while (operacao != NULL)
+	{
+		printf("ID: %d     Nome Operação: %s\n", operacao->idOp, operacao->nome);
+		OperacaoMaquina* opMaqAux = operacao->maquinas;
+		printf("-------------------------------------------\n");
 		operacao = operacao->seguinte;
 	}
 	printf("\n********************************************\n");

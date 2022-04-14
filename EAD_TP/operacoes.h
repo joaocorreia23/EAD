@@ -4,7 +4,7 @@
 
 #define MAXNOME 40
 
-// Definir as Estruturas de Dados
+// Definir as Estruturas de Dados para as Operações
 
 typedef struct operacao {
 	int idJob;
@@ -23,6 +23,7 @@ typedef struct operacaomaquina {
 // Declaração das Funções para as Operações
 
 void listarOperacoes(Operacao* operacao, Maquina* maquina);
+void listarApenasOperacoes(Operacao* operacao);
 Operacao* inserirOperacao(Operacao* operacao, int idOp, char nome[]);
 Operacao* removerOperacao(Operacao* operacao, int idOp);
 Operacao* alterarOperacao(Operacao* operacao, int idOp, char nomeNovo[]);

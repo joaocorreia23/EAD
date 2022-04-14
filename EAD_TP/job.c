@@ -67,8 +67,9 @@ void minimoTempo(Job* trabalho, int idJob, Maquina* maquina) {
 	while (listaDeTrabalhos != NULL) {
 
 		if (listaDeTrabalhos->idJob == idJob) {
-
-			printf("\tNome do Trabalho: %s\n", listaDeTrabalhos->nomeJob);
+			printf("*****************************************\n");
+			printf("*      Nome do Trabalho: %s      *\n", listaDeTrabalhos->nomeJob);
+			printf("*****************************************\n\n");
 			Operacao* listaDeOperacoes = listaDeTrabalhos->operacoes;
 
 			while (listaDeOperacoes != NULL)
@@ -99,61 +100,16 @@ void minimoTempo(Job* trabalho, int idJob, Maquina* maquina) {
 
 				}
 				MelhorTempoTotalJob += MaquinaAux->tempoOp;
-				printf("----------------------------------------------------------------------------------------\n");
+				printf("----------------------------------------------------------------------------------------\n\n");
 				listaDeOperacoes = listaDeOperacoes->seguinte;
 			}
 
-			printf("||========================================================||\n");
-			printf("||O MELHOR TEMPO DE EXECUÇÃO DO TRABALHO É: %.2f\n", MelhorTempoTotalJob);
-			printf("||========================================================||\n");
+			printf("*********************************************************************************\n");
+			printf("     O Minimo Tempo para Realizar este Trabalho é: %.2f Unidades de Tempo\n", MelhorTempoTotalJob);
+			printf("*********************************************************************************\n");
 		}
 		listaDeTrabalhos = listaDeTrabalhos->seguinte;
 	}
-	//Job* auxListaJobs = trabalho;
-	//Operacao* auxOperacoes;
-	//Maquina* auxMaquinas;
-	//Maquina* novaMaq = (Maquina*)malloc(sizeof(Maquina)); // Maquina auxiliar para imprimir a maquina
-
-	//int tempoMinimo = 0;
-	//int resultado = 0;
-
-	//while (auxListaJobs != NULL)
-	//{
-	//    if (auxListaJobs->idJob == idJob) {
-
-	//        auxOperacoes = auxListaJobs->operacoes;
-
-	//        while (auxOperacoes != NULL) { // Percorrer a lista de operações
-
-	//            tempoMinimo = 0;
-	//            novaMaq = NULL; // Maquina inicializa-se a NULL
-	//            auxMaquinas = auxOperacoes->maquinas;
-
-	//            while (auxMaquinas != NULL) {
-
-	//                novaMaq = auxMaquinas;
-
-	//                if (auxMaquinas->tempoOp < tempoMinimo) {
-	//                    novaMaq->nomeMaquina = auxMaquinas->nomeMaquina; // Guardamos o nome da maquina
-	//                    tempoMinimo = auxMaquinas->tempoOp; // Guardamos o tempo da maquina
-	//                }
-	//                else if (tempoMinimo == 0) {
-	//                    novaMaq->nomeMaquina = auxMaquinas->nomeMaquina; // Guardamos o nome da maquina
-	//                    tempoMinimo = auxMaquinas->tempoOp; // Guardamos o tempo da maquina
-	//                }
-	//                auxMaquinas = auxMaquinas->seguinte;
-	//            }
-	//            auxOperacoes = auxOperacoes->seguinte;
-
-	//            resultado += tempoMinimo;
-	//            printf("\nTempo minimo: %d - maq: %s\n", tempoMinimo, novaMaq->nomeMaquina);
-
-	//        }
-	//    }
-	//    auxListaJobs = auxListaJobs->seguinte;
-	//}
-
-	//printf("\nResultado mínimo: %d\n", resultado);
 }
 
 //Função para Calcular o Valor Máximo para Completar um Job
@@ -165,8 +121,9 @@ void maximoTempo(Job* trabalho, int idJob, Maquina* maquina) {
 	while (listaDeTrabalhos != NULL) {
 
 		if (listaDeTrabalhos->idJob == idJob) {
-
-			printf("\tNome do Trabalho: %s\n", listaDeTrabalhos->nomeJob);
+			printf("*****************************************\n");
+			printf("*      Nome do Trabalho: %s      *\n", listaDeTrabalhos->nomeJob);
+			printf("*****************************************\n\n");
 			Operacao* listaDeOperacoes = listaDeTrabalhos->operacoes;
 
 			while (listaDeOperacoes != NULL)
@@ -199,13 +156,14 @@ void maximoTempo(Job* trabalho, int idJob, Maquina* maquina) {
 				if (MaquinaAux != NULL) {
 					PiorTempoTotalJob += MaquinaAux->tempoOp;
 				}
-				printf("----------------------------------------------------------------------------------------\n");
+				printf("----------------------------------------------------------------------------------------\n\n");
 				listaDeOperacoes = listaDeOperacoes->seguinte;
 			}
 
-			printf("||========================================================||\n");
-			printf("||O PIOR TEMPO DE EXECUÇÃO DO TRABALHO É: %.2f\n", PiorTempoTotalJob);
-			printf("||========================================================||\n");
+			printf("*********************************************************************************\n");
+			printf("     O Máximo Tempo para Realizar este Trabalho é: %.2f Unidades de Tempo\n", PiorTempoTotalJob);
+			printf("*********************************************************************************\n");
+
 		}
 		listaDeTrabalhos = listaDeTrabalhos->seguinte;
 	}
@@ -221,8 +179,9 @@ void mediaTempo(Job* trabalho, int idJob, Maquina* maquina) {
 	while (listaDeTrabalhos != NULL) {
 
 		if (listaDeTrabalhos->idJob == idJob) {
-
-			printf("\tNome do Trabalho: %s\n", listaDeTrabalhos->nomeJob);
+			printf("*****************************************\n");
+			printf("*      Nome do Trabalho: %s      *\n", listaDeTrabalhos->nomeJob);
+			printf("*****************************************\n\n");
 			Operacao* listaDeOperacoes = listaDeTrabalhos->operacoes;
 
 			while (listaDeOperacoes != NULL)
@@ -252,12 +211,13 @@ void mediaTempo(Job* trabalho, int idJob, Maquina* maquina) {
 				}
 				if (countMaq > 0) {
 					mediaTempo = mediaTempo / countMaq;
-					printf("----------------------------------------------------------------------------------------\n");
-					printf("O TEMPO MÉDIO EXECUÇÃO DA OPERAÇÃO É: %.2f\n", mediaTempo);
-					printf("----------------------------------------------------------------------------------------\n");
+					printf("\n**************************************************************\n");
+					printf("     O Tempo Médio por Operação é: %.2f Unidades de Tempo\n", mediaTempo);
+					printf("**************************************************************\n\n");
+
 				}
 				else {
-					printf("A OPERAÇÃO NÃO TEM MÁQUINAS ASSOCIADAS\n");
+					printf("Sem Máquinas Associadas a Operação\n");
 					printf("----------------------------------------------------------------------------------------\n");
 				}
 
