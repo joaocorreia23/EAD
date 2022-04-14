@@ -169,7 +169,7 @@ void maximoTempo(Job* trabalho, int idJob, Maquina* maquina) {
 	}
 }
 
-//Função para Calcular o Valor Médio para Completar um Job
+//Função para Calcular o Valor Médio por Operação para Completar um Job
 void mediaTempo(Job* trabalho, int idJob, Maquina* maquina) {
 	float mediaTempo = 0;
 	int countMaq = 0;
