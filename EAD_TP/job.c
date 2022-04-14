@@ -15,12 +15,12 @@ void listarJobs(Job* trabalho, Maquina* maquina) {
 	{
 		printf("ID JOB: %d   Nome Trabalho: %s\n", jobAux->idJob, jobAux->nomeJob);
 		Operacao* opAux = jobAux->operacoes;
-		printf("----------------------------------------------------------------------------------------\n");
+		printf("------------------------------------------------------------------------------------------------\n");
 		while (opAux != NULL) {
 			printf("\tID: %d     Nome Operação: %s\n", opAux->idOp, opAux->nome);
 
 			OperacaoMaquina* maqAux = opAux->maquinas;
-			printf("----------------------------------------------------------------------------------------\n");
+			printf("------------------------------------------------------------------------------------------------\n");
 			while (maqAux != NULL)
 			{
 				Maquina* maquinaAux = maquina;
@@ -32,11 +32,10 @@ void listarJobs(Job* trabalho, Maquina* maquina) {
 
 				maqAux = maqAux->seguinte;
 			}
-			printf("----------------------------------------------------------------------------------------\n");
+			printf("------------------------------------------------------------------------------------------------\n");
 
 			opAux = opAux->seguinte;
 		}
-		printf("----------------------------------------------------------------------------------------\n");
 		jobAux = jobAux->seguinte;
 	}
 	printf("\n***************************************************************************\n");

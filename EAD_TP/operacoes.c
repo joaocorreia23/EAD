@@ -13,16 +13,21 @@ void listarOperacoes(Operacao* operacao, Maquina* maquina)
 		printf("ID: %d     Nome Operação: %s\n", operacao->idOp, operacao->nome);
 		OperacaoMaquina* opMaqAux = operacao->maquinas;
 		printf("----------------------------------------------------------------------------------------\n");
-		while (opMaqAux != NULL)
-		{
-			Maquina* maqAux = maquina;
-			while (maqAux != NULL && maqAux->idMaq != opMaqAux->idMaq)
-				maqAux = maqAux->seguinte;
+		if (opMaqAux == NULL) {
+			printf("\tNão tem Máquinas Associadas\n");
+		}
+		else {
+			while (opMaqAux != NULL)
+			{
+				Maquina* maqAux = maquina;
+				while (maqAux != NULL && maqAux->idMaq != opMaqAux->idMaq)
+					maqAux = maqAux->seguinte;
 
-			if (maqAux != NULL)
-				printf("\t\tID: %d   Nome Máquina: %s     Tempo Máquina: %.2f     Localização: %s\n", maqAux->idMaq, maqAux->nomeMaquina, maqAux->tempoOp, maqAux->localizacao);
+				if (maqAux != NULL)
+					printf("\tID: %d   Nome Máquina: %s     Tempo Máquina: %.2f     Localização: %s\n", maqAux->idMaq, maqAux->nomeMaquina, maqAux->tempoOp, maqAux->localizacao);
 
-			opMaqAux = opMaqAux->seguinte;
+				opMaqAux = opMaqAux->seguinte;
+			}
 		}
 		printf("----------------------------------------------------------------------------------------\n");
 		operacao = operacao->seguinte;
@@ -35,11 +40,23 @@ Operacao* inserirOperacao(Operacao* operacao, int idOp, char nome[]) {
 	Operacao* nova = (Operacao*)malloc(sizeof(Operacao));
 
 	if (nova != NULL) {
+		Operacao* opAux = operacao;
+		Operacao* opAux2 = operacao;
+		while (opAux != NULL) {
+			opAux2 = opAux;
+			opAux = opAux->seguinte;
+		}
 		nova->idOp = idOp;
 		strcpy(nova->nome, nome);
 		nova->maquinas = NULL;
-		nova->seguinte = operacao;
-		return(nova);
+		nova->seguinte = NULL;
+		if (opAux2 != NULL) {
+			opAux2->seguinte = nova;
+			return (operacao);
+		}
+		else {
+			return (nova);
+		}
 	}
 	else {
 		return(operacao);

@@ -1,10 +1,13 @@
-//Página header do operacoes.h
+//Página header das Operações
 #include <stdio.h>
 #include "maquinas.h"
 
 #define MAXNOME 40
 
+// Definir as Estruturas de Dados
+
 typedef struct operacao {
+	int idJob;
 	int idOp;
 	char nome[MAXNOME];
 	struct operacaomaquina* maquinas;
@@ -16,6 +19,8 @@ typedef struct operacaomaquina {
 	int idMaq;
 	struct operacaomaquina* seguinte;
 } OperacaoMaquina;
+
+// Declaração das Funções para as Operações
 
 void listarOperacoes(Operacao* operacao, Maquina* maquina);
 Operacao* inserirOperacao(Operacao* operacao, int idOp, char nome[]);

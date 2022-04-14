@@ -77,11 +77,9 @@ Operacao* criaOperacao(Operacao* operacao) {
 	Maquina* maquinas = NULL;
 
 	idOp = autoIdOp(idOp);
-
+	
 	printf("Nome da Operação: ");
 	scanf("%s", &name);
-
-	printf("Nome da Operação: ");
 
 	return inserirOperacao(operacao, idOp, name, maquinas);
 }
@@ -148,9 +146,9 @@ main() {
 
 	//Inserção de Operações Predefinidas
 	Operacao* op = NULL;
-	op = inserirOperacao(op, 1, "00");
-	op = inserirOperacao(op, 2, "01");
-	op = inserirOperacao(op, 3, "02");
+	op = inserirOperacao(op, 1, "1");
+	op = inserirOperacao(op, 2, "2");
+	op = inserirOperacao(op, 3, "3");
 
 	//Associação de Operações a Máquinas Predefinidas
 	op = associarMaquina(op, 1, 1);
