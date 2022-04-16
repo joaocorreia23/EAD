@@ -104,7 +104,7 @@ Operacao* removeOperacao(Operacao* operacao) {
 
 	listarApenasOperacoes(operacao);
 
-	printf("ID da Operação: ");
+	printf("ID da Operação para Eliminar: ");
 	scanf("%d", &idOp);
 
 
@@ -163,6 +163,7 @@ Operacao* desassociaMaquina(Operacao* operacao, Maquina* maquina) {
 }
 
 #pragma endregion
+
 
 #pragma region MÁQUINAS
 //Funções para fazer o CRUD das Máquinas
