@@ -88,9 +88,13 @@ main() {
 
 	// Inserção de Operações Predefinidas
 	Operacao* op = NULL;
+	Operacao* op2 = NULL;
+
 	op = inserirOperacao(op, 1, "1");
 	op = inserirOperacao(op, 2, "2");
 	op = inserirOperacao(op, 3, "3");
+
+	op2 = inserirOperacao(op, 10, "10");
 
 	// Associação de Operações a Máquinas Predefinidas
 	op = associarMaquina(op, 1, 1);
@@ -99,9 +103,12 @@ main() {
 	op = associarMaquina(op, 2, 3);
 	op = associarMaquina(op, 3, 2);
 
+	op2 = associarMaquina(op, 10, 3);
+
 	// Inserção de Jobs Predefinidos
 	Job* job = NULL;
 	job = inserirJob(job, 1, "Trabalho1", op);
+	job = inserirJob(job, 2, "Trabalho2", op2);
 
 	do
 	{
@@ -217,22 +224,30 @@ main() {
 				switch (subOption)
 				{
 				case 1:
-					listarJobs(job, maq);
+					job = criaJob(job);
 					system("pause");
 					break;
 				case 2:
-					minimoTempo(job, 1, maq);
+					job = removeJob(job);
 					system("pause");
 					break;
 				case 3:
-					maximoTempo(job, 1, maq);
+					listarJobs(job, maq);
 					system("pause");
 					break;
 				case 4:
-					mediaTempo(job, 1, maq);
+					minimoTempo(job, 1, maq);
 					system("pause");
 					break;
 				case 5:
+					maximoTempo(job, 1, maq);
+					system("pause");
+					break;
+				case 6:
+					mediaTempo(job, 1, maq);
+					system("pause");
+					break;
+				case 7:
 					exportarJob(job, maq);
 					system("pause");
 					break;
@@ -266,3 +281,6 @@ main() {
 	} while (option != 0);
 
 }
+
+
+

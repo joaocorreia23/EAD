@@ -27,3 +27,10 @@ Operacao* desassociaMaquina(Operacao* operacao, Maquina* maquinas);
 Maquina* criaMaquina(Maquina* maquina);
 
 #pragma endregion
+
+#pragma region TRABALHOS
+
+Job* inserirJob(Job* trabalho, int idJob, char nomeJob[], Operacao* operacoes);
+Job* removerJob(Job* trabalho, int idJob);
+
+#pragma endregion

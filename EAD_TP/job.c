@@ -36,9 +36,25 @@ void listarJobs(Job* trabalho, Maquina* maquina) {
 
 			opAux = opAux->seguinte;
 		}
+		printf("=====================================================================================================\n");
+		printf("=====================================================================================================\n\n");
 		jobAux = jobAux->seguinte;
 	}
 	printf("\n*************************************************************************************************\n");
+}
+
+// Funão para Listar Apenas os Jobs
+void listarApenasJobs(Job* trabalho) {
+	printf("********************************************\n");
+	printf("*            LISTA DE TRABALHOS            *\n");
+	printf("********************************************\n\n");
+	while (trabalho != NULL)
+	{
+		printf("ID: %d     Nome Trabalho (Job): %s\n", trabalho->idJob, trabalho->nomeJob);
+		printf("-------------------------------------------\n");
+		trabalho = trabalho->seguinte;
+	}
+	printf("\n********************************************\n");
 }
 
 // Função para Adicionar Jobs
@@ -55,6 +71,32 @@ Job* inserirJob(Job* trabalho, int idJob, char nomeJob[], Operacao* operacoes) {
 	else {
 		return(trabalho);
 	}
+}
+
+// Função para Remover Job por ID
+Job* removerJob(Job* trabalho, int idJob) {
+	//Declaração dos nodo's para armazenar a informação das operações
+	Job* nodoAtual = trabalho;
+	Job* nodoAnterior;
+
+	if (nodoAtual->idJob == idJob) {
+		trabalho = nodoAtual->seguinte;
+		free(nodoAtual);
+	}
+	else {
+		nodoAnterior = trabalho; // Armazena a informação da operação 
+		nodoAtual = nodoAnterior->seguinte; // Segue para a proxima operação 
+		while ((nodoAtual != NULL) && (nodoAtual->idJob != idJob)) {
+			nodoAnterior = nodoAtual;
+			nodoAtual = nodoAtual->seguinte;
+		}
+		if (nodoAtual != NULL)
+		{
+			nodoAnterior->seguinte = nodoAtual->seguinte;
+			free(nodoAtual);
+		}
+	}
+	return(trabalho);
 }
 
 //Função para Calcular o Valor Mínimo para Completar um Job

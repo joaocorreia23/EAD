@@ -59,11 +59,13 @@ void mostraTrabalhosMenu() {
 	printf("*                 TRABALHOS               *\n");
 	printf("*******************************************\n\n");
 
-	printf("1. Listar Trabalhos \n");
-	printf("2. Minimo Tempo de um Trabalho \n");
-	printf("3. Máximo Tempo de um Trabalho \n");
-	printf("4. Média Tempo de um Trabalho \n");
-	printf("5. Exportar Trabalho \n");
+	printf("1. Adicionar um Trabalho\n");
+	printf("2. Remover um Trabalho\n");
+	printf("3. Listar Trabalhos \n");
+	printf("4. Minimo Tempo de um Trabalho \n");
+	printf("5. Máximo Tempo de um Trabalho \n");
+	printf("6. Média Tempo de um Trabalho \n");
+	printf("7. Exportar Trabalho \n");
 	printf("0. Sair! \n\n");
 
 	printf("*******************************************\n\n");
@@ -186,6 +188,37 @@ Maquina* criaMaquina(Maquina* maquina) {
 	scanf("%s", &localizacao);
 
 	return inserirMaquina(maquina, idMaq, name, tempoOp, localizacao);
+}
+
+#pragma endregion
+
+
+#pragma region TRABALHOS
+//Funções para fazer o CRUD dos Trabalhos (Jobs)
+
+Job* criaJob(Job* trabalho) {
+	char nomeJob[MAXNOME];
+	int idJob = 0;
+	Operacao* operacoes = NULL;
+
+	idJob = autoIdJob(idJob);
+
+	printf("Nome da Trabalho (Job): ");
+	scanf("%s", &nomeJob);
+
+	return inserirJob(trabalho, idJob, nomeJob, operacoes);
+}
+
+Job* removeJob(Job* trabalho) {
+	int idJob = 0;
+
+	listarApenasJobs(trabalho);
+
+	printf("ID do Trabalho (Job) para Eliminar: ");
+	scanf("%d", &idJob);
+
+
+	return removerJob(trabalho, idJob);
 }
 
 #pragma endregion

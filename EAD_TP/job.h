@@ -16,7 +16,9 @@ typedef struct job {
 // Declaração das Funções para os Jobs (Trabalhos)
 
 void listarJobs(Job* trabalho, Maquina* maquina);
+void listarApenasJobs(Job* trabalho);
 Job* inserirJob(Job* trabalho, int idJob, char nomeJob[], Operacao* operacoes);
+Job* removerJob(Job* trabalho, int idJob);
 void minimoTempo(Job* trabalho, int idJob, Maquina* maquina);
 void maximoTempo(Job* trabalho, int idJob, Maquina* maquina);
 void mediaTempo(Job* trabalho, int idJob, Maquina* maquina);

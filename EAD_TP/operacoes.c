@@ -136,12 +136,16 @@ Operacao* associarMaquina(Operacao* operacao, int idOp, int idMaq) {
 
 	if (nodoAtualOperacao != NULL)
 	{
+		//Fazer o IF se a Maquina ja estiver na operação associada
 		OperacaoMaquina* nova = (OperacaoMaquina*)malloc(sizeof(OperacaoMaquina));
 		nova->idMaq = idMaq;
 		nova->idOp = idOp;
 		nova->seguinte = nodoAtualOperacao->maquinas;
 
 		nodoAtualOperacao->maquinas = nova;
+
+		//printf("A Máquina já se encontra associada a esta operação");
+
 	}
 
 	return operacao;
