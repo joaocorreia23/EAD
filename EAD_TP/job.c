@@ -11,48 +11,56 @@ void listarJobs(Job* trabalho, Maquina* maquina) {
 	printf("*                                     LISTA DE TRABALHOS                                        *\n");
 	printf("*************************************************************************************************\n\n");
 
-	while (jobAux != NULL)
-	{
-		printf("ID JOB: %d   Nome Trabalho: %s\n", jobAux->idJob, jobAux->nomeJob);
-		Operacao* opAux = jobAux->operacoes;
-		printf("------------------------------------------------------------------------------------------------\n");
-		while (opAux != NULL) {
-			printf("\tID: %d     Nome Operação: %s\n", opAux->idOp, opAux->nome);
 
-			OperacaoMaquina* maqAux = opAux->maquinas;
+	if (trabalho != NULL) {
+		while (jobAux != NULL)
+		{
+			printf("ID JOB: %d   Nome Trabalho: %s\n", jobAux->idJob, jobAux->nomeJob);
+			Operacao* opAux = jobAux->operacoes;
 			printf("------------------------------------------------------------------------------------------------\n");
-			while (maqAux != NULL)
-			{
-				Maquina* maquinaAux = maquina;
-				while (maquinaAux != NULL && maquinaAux->idMaq != maqAux->idMaq)
-					maquinaAux = maquinaAux->seguinte;
+			while (opAux != NULL) {
+				printf("\tID: %d     Nome Operação: %s\n", opAux->idOp, opAux->nome);
 
-				if (maquinaAux != NULL)
-					printf("\t\tID: %d   Nome Máquina: %s     Tempo Máquina: %.2f     Localização: %s\n", maquinaAux->idMaq, maquinaAux->nomeMaquina, maquinaAux->tempoOp, maquinaAux->localizacao);
+				OperacaoMaquina* maqAux = opAux->maquinas;
+				printf("------------------------------------------------------------------------------------------------\n");
+				while (maqAux != NULL)
+				{
+					Maquina* maquinaAux = maquina;
+					while (maquinaAux != NULL && maquinaAux->idMaq != maqAux->idMaq)
+						maquinaAux = maquinaAux->seguinte;
 
-				maqAux = maqAux->seguinte;
+					if (maquinaAux != NULL)
+						printf("\t\tID: %d   Nome Máquina: %s     Tempo Máquina: %.2f     Localização: %s\n", maquinaAux->idMaq, maquinaAux->nomeMaquina, maquinaAux->tempoOp, maquinaAux->localizacao);
+
+					maqAux = maqAux->seguinte;
+				}
+				printf("------------------------------------------------------------------------------------------------\n");
+
+				opAux = opAux->seguinte;
 			}
-			printf("------------------------------------------------------------------------------------------------\n");
-
-			opAux = opAux->seguinte;
+			printf("=====================================================================================================\n");
+			printf("=====================================================================================================\n\n");
+			jobAux = jobAux->seguinte;
 		}
-		printf("=====================================================================================================\n");
-		printf("=====================================================================================================\n\n");
-		jobAux = jobAux->seguinte;
 	}
+	else {
+		printf("Sem trabalhos a apresentar");
+	}
+	
 	printf("\n*************************************************************************************************\n");
 }
 
 // Funão para Listar Apenas os Jobs
 void listarApenasJobs(Job* trabalho) {
+	Job* jobAux = trabalho;
 	printf("********************************************\n");
 	printf("*            LISTA DE TRABALHOS            *\n");
 	printf("********************************************\n\n");
-	while (trabalho != NULL)
+	while (jobAux != NULL)
 	{
-		printf("ID: %d     Nome Trabalho (Job): %s\n", trabalho->idJob, trabalho->nomeJob);
+		printf("ID: %d     Nome Trabalho (Job): %s\n", jobAux->idJob, jobAux->nomeJob);
 		printf("-------------------------------------------\n");
-		trabalho = trabalho->seguinte;
+		jobAux = jobAux->seguinte;
 	}
 	printf("\n********************************************\n");
 }

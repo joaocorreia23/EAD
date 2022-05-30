@@ -51,7 +51,7 @@ void listarApenasOperacoes(Operacao* operacao) {
 }
 
 // Função para Criar um Novo Registo de uma Nova Operação
-Operacao* inserirOperacao(Operacao* operacao, int idOp, char nome[]) {
+Operacao* inserirOperacao(Operacao* operacao, int idJob, int idOp, char nome[]) {
 	Operacao* nova = (Operacao*)malloc(sizeof(Operacao));
 
 	if (nova != NULL) {
@@ -61,6 +61,7 @@ Operacao* inserirOperacao(Operacao* operacao, int idOp, char nome[]) {
 			opAux2 = opAux;
 			opAux = opAux->seguinte;
 		}
+		nova->idJob = idJob;
 		nova->idOp = idOp;
 		strcpy(nova->nome, nome);
 		nova->maquinas = NULL;
@@ -128,6 +129,7 @@ Operacao* associarMaquina(Operacao* operacao, int idOp, int idMaq) {
 	Operacao* nodoAtualOperacao = operacao;
 	Operacao* nodoAnteriorOperacao;
 
+
 	while (nodoAtualOperacao != NULL && nodoAtualOperacao->idOp != idOp)
 	{
 		nodoAnteriorOperacao = nodoAtualOperacao;
@@ -136,16 +138,12 @@ Operacao* associarMaquina(Operacao* operacao, int idOp, int idMaq) {
 
 	if (nodoAtualOperacao != NULL)
 	{
-		//Fazer o IF se a Maquina ja estiver na operação associada
 		OperacaoMaquina* nova = (OperacaoMaquina*)malloc(sizeof(OperacaoMaquina));
 		nova->idMaq = idMaq;
 		nova->idOp = idOp;
 		nova->seguinte = nodoAtualOperacao->maquinas;
 
 		nodoAtualOperacao->maquinas = nova;
-
-		//printf("A Máquina já se encontra associada a esta operação");
-
 	}
 
 	return operacao;

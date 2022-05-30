@@ -14,7 +14,7 @@ void close();
 
 #pragma region OPERAÇÕES
 
-Operacao* criaOperacao(Operacao* operacao);
+Operacao* criaOperacao(Operacao* operacao, Job* trabalho);
 Operacao* removeOperacao(Operacao* operacao);
 Operacao* editaOperacao(Operacao* operacao);
 Operacao* associaMaquina(Operacao* operacao, Maquina* maquinas);
@@ -30,7 +30,7 @@ Maquina* criaMaquina(Maquina* maquina);
 
 #pragma region TRABALHOS
 
-Job* inserirJob(Job* trabalho, int idJob, char nomeJob[], Operacao* operacoes);
-Job* removerJob(Job* trabalho, int idJob);
+Job* criaJob(Job* trabalho);
+Job* removeJob(Job* trabalho);
 
 #pragma endregion

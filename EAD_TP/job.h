@@ -13,6 +13,12 @@ typedef struct job {
 	struct job* seguinte;
 } Job;
 
+typedef struct jobOperation{
+	int idJob;
+	int idOp;
+	struct jobOperation* seguinte;
+} jobOperation;
+
 // Declaração das Funções para os Jobs (Trabalhos)
 
 void listarJobs(Job* trabalho, Maquina* maquina);

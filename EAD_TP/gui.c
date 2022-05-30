@@ -87,18 +87,24 @@ void close() {
 #pragma region OPERAÇÕES
 //Funções para fazer o CRUD das Operações
 
-Operacao* criaOperacao(Operacao* operacao) {
+Operacao* criaOperacao(Operacao* operacao, Job* trabalho) {
 	char name[MAXNOME];
 	float tempo;
-	int idOp = 0;
+	int idJob , idOp = 0;
 	Maquina* maquinas = NULL;
+
+	listarApenasJobs(trabalho);
+
+	printf("\nSelecione o ID do Trabalho (Job) para Adicionar a Operação: \n");
+	scanf("%s", &idJob);
+	printf("\n");
 
 	idOp = autoIdOp(idOp);
 
 	printf("Nome da Operação: ");
 	scanf("%s", &name);
 
-	return inserirOperacao(operacao, idOp, name, maquinas);
+	return inserirOperacao(operacao, idJob, idOp, name, maquinas);
 }
 
 Operacao* removeOperacao(Operacao* operacao) {
@@ -199,7 +205,7 @@ Maquina* criaMaquina(Maquina* maquina) {
 Job* criaJob(Job* trabalho) {
 	char nomeJob[MAXNOME];
 	int idJob = 0;
-	Operacao* operacoes = NULL;
+	Operacao* operacoes = NULL; 
 
 	idJob = autoIdJob(idJob);
 

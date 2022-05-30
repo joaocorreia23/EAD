@@ -82,19 +82,17 @@ main() {
 
 	// Inserção de Máquinas Predefinidas
 	Maquina* maq = NULL;
+
 	maq = inserirMaquina(maq, 1, "Maquina1", 3, "Piso1");
-	maq = inserirMaquina(maq, 2, "Maquina2", 7, "Piso1");
-	maq = inserirMaquina(maq, 3, "Maquina3", 5, "Piso1");
+	maq = inserirMaquina(maq, 2, "Maquina2", 7, "Piso2");
+	maq = inserirMaquina(maq, 3, "Maquina3", 5, "Piso3");
 
 	// Inserção de Operações Predefinidas
 	Operacao* op = NULL;
-	Operacao* op2 = NULL;
 
-	op = inserirOperacao(op, 1, "1");
-	op = inserirOperacao(op, 2, "2");
-	op = inserirOperacao(op, 3, "3");
-
-	op2 = inserirOperacao(op, 10, "10");
+	op = inserirOperacao(op, 1, 1, "1");
+	op = inserirOperacao(op, 1, 2, "2");
+	op = inserirOperacao(op, 1, 3, "3");
 
 	// Associação de Operações a Máquinas Predefinidas
 	op = associarMaquina(op, 1, 1);
@@ -103,12 +101,11 @@ main() {
 	op = associarMaquina(op, 2, 3);
 	op = associarMaquina(op, 3, 2);
 
-	op2 = associarMaquina(op, 10, 3);
 
 	// Inserção de Jobs Predefinidos
 	Job* job = NULL;
 	job = inserirJob(job, 1, "Trabalho1", op);
-	job = inserirJob(job, 2, "Trabalho2", op2);
+	job = inserirJob(job, 2, "Trabalho2", op);
 
 	do
 	{
@@ -174,7 +171,7 @@ main() {
 					break;
 
 				case 2:
-					op = criaOperacao(op);
+					op = criaOperacao(op, job);
 					system("pause");
 					break;
 
