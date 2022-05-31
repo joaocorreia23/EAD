@@ -7,11 +7,9 @@
 // Definir as Estruturas de Dados para as Operações
 
 typedef struct operacao {
-	int idJob;
 	int idOp;
 	char nome[MAXNOME];
 	struct operacaomaquina* maquinas;
-	struct maquinas* maquinas2;
 	struct operacao* seguinte;
 } Operacao;
 

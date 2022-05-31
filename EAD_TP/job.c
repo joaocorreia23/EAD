@@ -3,7 +3,7 @@
 #include "job.h"
 
 // Função para Listar todos os Jobs
-void listarJobs(Job* trabalho, Maquina* maquina) {
+void listarJobs(Job* trabalho, Maquina* maquina, Operacao* operacao) {
 
 	Job* jobAux = trabalho;
 
@@ -16,27 +16,44 @@ void listarJobs(Job* trabalho, Maquina* maquina) {
 		while (jobAux != NULL)
 		{
 			printf("ID JOB: %d   Nome Trabalho: %s\n", jobAux->idJob, jobAux->nomeJob);
-			Operacao* opAux = jobAux->operacoes;
+			JobOperation* jobOpAux = jobAux->operacoes;
 			printf("------------------------------------------------------------------------------------------------\n");
-			while (opAux != NULL) {
-				printf("\tID: %d     Nome Operação: %s\n", opAux->idOp, opAux->nome);
 
-				OperacaoMaquina* maqAux = opAux->maquinas;
-				printf("------------------------------------------------------------------------------------------------\n");
-				while (maqAux != NULL)
-				{
-					Maquina* maquinaAux = maquina;
-					while (maquinaAux != NULL && maquinaAux->idMaq != maqAux->idMaq)
-						maquinaAux = maquinaAux->seguinte;
+			if (jobOpAux != NULL) {
+				while (jobOpAux != NULL) {
+					Operacao* opAux = operacao;
+					while (opAux != NULL && opAux->idOp != jobOpAux->idOp)
+						opAux = opAux->seguinte;
 
-					if (maquinaAux != NULL)
-						printf("\t\tID: %d   Nome Máquina: %s     Tempo Máquina: %.2f     Localização: %s\n", maquinaAux->idMaq, maquinaAux->nomeMaquina, maquinaAux->tempoOp, maquinaAux->localizacao);
+					printf("\tID: %d     Nome Operação: %s\n", opAux->idOp, opAux->nome);
 
-					maqAux = maqAux->seguinte;
+					OperacaoMaquina* maqAux = opAux->maquinas;
+					printf("------------------------------------------------------------------------------------------------\n");
+					if (maqAux != NULL) {
+						while (maqAux != NULL)
+						{
+							Maquina* maquinaAux = maquina;
+							while (maquinaAux != NULL && maquinaAux->idMaq != maqAux->idMaq)
+								maquinaAux = maquinaAux->seguinte;
+
+							if (maquinaAux != NULL)
+								printf("\t\tID: %d   Nome Máquina: %s     Tempo Máquina: %.2f     Localização: %s\n", maquinaAux->idMaq, maquinaAux->nomeMaquina, maquinaAux->tempoOp, maquinaAux->localizacao);
+
+							maqAux = maqAux->seguinte;
+						}
+					}
+					else
+					{
+						printf("\t\tSem maquinas associadas\n");
+					}
+					printf("------------------------------------------------------------------------------------------------\n");
+
+					jobOpAux = jobOpAux->seguinte;
 				}
-				printf("------------------------------------------------------------------------------------------------\n");
-
-				opAux = opAux->seguinte;
+			}
+			else
+			{
+				printf("\tSem operações associadas\n");
 			}
 			printf("=====================================================================================================\n");
 			printf("=====================================================================================================\n\n");
@@ -46,7 +63,7 @@ void listarJobs(Job* trabalho, Maquina* maquina) {
 	else {
 		printf("Sem trabalhos a apresentar");
 	}
-	
+
 	printf("\n*************************************************************************************************\n");
 }
 
@@ -66,13 +83,13 @@ void listarApenasJobs(Job* trabalho) {
 }
 
 // Função para Adicionar Jobs
-Job* inserirJob(Job* trabalho, int idJob, char nomeJob[], Operacao* operacoes) {
+Job* inserirJob(Job* trabalho, int idJob, char nomeJob[]) {
 	Job* novo = (Job*)malloc(sizeof(Job));
 
 	if (novo != NULL) {
 		novo->idJob = idJob;
 		strcpy(novo->nomeJob, nomeJob);
-		novo->operacoes = operacoes;
+		novo->operacoes = NULL;
 		novo->seguinte = trabalho;
 		return(novo);
 	}
@@ -342,7 +359,7 @@ Job* associarOperacao(Job* trabalho, int idOp, int idJob) {
 
 	if (nodoAtualTrabalho != NULL)
 	{
-		jobOperation* nova = (jobOperation*)malloc(sizeof(jobOperation));
+		JobOperation* nova = (JobOperation*)malloc(sizeof(JobOperation));
 		nova->idOp = idOp;
 		nova->idJob = idJob;
 		nova->seguinte = nodoAtualTrabalho->operacoes;
@@ -366,8 +383,8 @@ Job* desassociarOperacao(Job* trabalho, int idJob, int idOp) {
 
 	if (nodoAtualTrabalho != NULL)
 	{
-		jobOperation* nodoAtualjobOperation = nodoAtualTrabalho->operacoes;
-		jobOperation* nodoAnteriorjobOperation;
+		JobOperation* nodoAtualjobOperation = nodoAtualTrabalho->operacoes;
+		JobOperation* nodoAnteriorjobOperation;
 
 		if (nodoAtualjobOperation->idOp == idOp) {
 			nodoAtualTrabalho->operacoes = nodoAtualjobOperation->seguinte;

@@ -1,3 +1,4 @@
+#include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include "gui.h"
@@ -100,6 +101,16 @@ Operacao* criaOperacao(Operacao* operacao) {
 	printf("Nome da Operação: ");
 	scanf("%s", &name);
 
+
+	Operacao* opAux = operacao;
+	while (opAux != NULL && strcmp(opAux->nome, name) != 0)
+		opAux = opAux->seguinte;
+
+	if (opAux != NULL) {
+		printf("\n\Já existe uma operação com o nome '%s'\n", name);
+		return operacao;
+	}
+
 	return inserirOperacao(operacao, idOp, name, maquinas);
 }
 
@@ -133,35 +144,129 @@ Operacao* editaOperacao(Operacao* operacao) {
 }
 
 Operacao* associaMaquina(Operacao* operacao, Maquina* maquina) {
-	int idMaq, idOp = 0;
+	int idOp = 0, idMaq = 0;
 
-	listarOperacoes(operacao, maquina);
+	do
+	{
+		listarOperacoes(operacao, maquina);
 
-	printf("ID da Operação: ");
-	scanf("%d", &idOp);
+		printf("ID da Operação: ");
+		scanf("%d", &idOp);
+
+		Operacao* opAux = operacao;
+		while (opAux != NULL && opAux->idOp != idOp)
+			opAux = opAux->seguinte;
+
+		if (opAux == NULL) {
+			idOp = 0;
+			system("cls");
+			printf("Escolha inválida\n");
+			system("pause");
+			system("cls");
+		}
+	} while (idOp == 0);
+
+	system("cls");
+
+	do
+	{
+		printf("ID da Operação: %d\n", idOp);
+
+		listarMaquinas(maquina);
+
+		printf("ID da Máquina Para Associar: ");
+		scanf("%d", &idMaq);
+
+		Maquina* maqAux = maquina;
+		while (maqAux != NULL && maqAux->idMaq != idMaq)
+			maqAux = maqAux->seguinte;
+
+		if (maqAux == NULL) {
+			idMaq = 0;
+			system("cls");
+			printf("Escolha inválida\n");
+			system("pause");
+			system("cls");
+		}
+	} while (idMaq == 0);
 
 
-	listarMaquinas(maquina);
+	Operacao* opAux = operacao;
+	while (opAux != NULL && opAux->idOp != idOp)
+		opAux = opAux->seguinte;
 
-	printf("ID da Máquina Para Associar: ");
-	scanf("%d", &idMaq);
+	OperacaoMaquina* opMaqAux = opAux->maquinas;
+	while (opMaqAux != NULL && opMaqAux->idMaq != idMaq)
+		opMaqAux = opMaqAux->seguinte;
 
+	if (opMaqAux != NULL) {
+		printf("\n\nMáquina '%d' já está associada à operação '%d'\n", idMaq, idOp);
+		return operacao;
+	}
 
 	return associarMaquina(operacao, idOp, idMaq);
 }
 
 Operacao* desassociaMaquina(Operacao* operacao, Maquina* maquina) {
-	int idMaq, idOp = 0;
+	int idOp = 0, idMaq = 0;
 
-	listarOperacoes(operacao, maquina);
+	do
+	{
+		listarOperacoes(operacao, maquina);
 
-	printf("ID da Operação: ");
-	scanf("%d", &idOp);
+		printf("ID da Operação: ");
+		scanf("%d", &idOp);
+
+		Operacao* opAux = operacao;
+		while (opAux != NULL && opAux->idOp != idOp)
+			opAux = opAux->seguinte;
+
+		if (opAux == NULL) {
+			idOp = 0;
+			system("cls");
+			printf("Escolha inválida\n");
+			system("pause");
+			system("cls");
+		}
+	} while (idOp == 0);
+
+	system("cls");
+
+	do
+	{
+		printf("ID da Operação: %d\n", idOp);
+
+		listarMaquinas(maquina);
+
+		printf("ID da Máquina Para Desassociar: ");
+		scanf("%d", &idMaq);
+
+		Maquina* maqAux = maquina;
+		while (maqAux != NULL && maqAux->idMaq != idMaq)
+			maqAux = maqAux->seguinte;
+
+		if (maqAux == NULL) {
+			idMaq = 0;
+			system("cls");
+			printf("Escolha inválida\n");
+			system("pause");
+			system("cls");
+		}
+	} while (idMaq == 0);
 
 
-	printf("ID da Máquina Para Desassociar: ");
-	scanf("%d", &idMaq);
+	Operacao* opAux = operacao;
+	while (opAux != NULL && opAux->idOp != idOp)
+		opAux = opAux->seguinte;
 
+	OperacaoMaquina* opMaqAux = opAux->maquinas;
+	while (opMaqAux != NULL && opMaqAux->idMaq != idMaq)
+		opMaqAux = opMaqAux->seguinte;
+
+	if (opMaqAux == NULL) {
+		printf("\n\nMáquina %d não está associada à operação %d\n", idMaq, idOp);
+		return operacao;
+	}
 
 	return desassociarMaquina(operacao, idOp, idMaq);
 }
@@ -201,7 +306,7 @@ Maquina* criaMaquina(Maquina* maquina) {
 Job* criaJob(Job* trabalho) {
 	char nomeJob[MAXNOME];
 	int idJob = 0;
-	Operacao* operacoes = NULL; 
+	Operacao* operacoes = NULL;
 
 	idJob = autoIdJob(idJob);
 

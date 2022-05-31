@@ -9,21 +9,21 @@
 typedef struct job {
 	int idJob;
 	char nomeJob[MAXNOME];
-	struct jobOperation* operacoes;
+	struct joboperation* operacoes;
 	struct job* seguinte;
 } Job;
 
-typedef struct jobOperation{
+typedef struct joboperation {
 	int idJob;
 	int idOp;
-	struct jobOperation* seguinte;
-} jobOperation;
+	struct joboperation* seguinte;
+} JobOperation;
 
 // Declaração das Funções para os Jobs (Trabalhos)
 
-void listarJobs(Job* trabalho, Maquina* maquina);
+void listarJobs(Job* trabalho, Maquina* maquina, Operacao* operacao);
 void listarApenasJobs(Job* trabalho);
-Job* inserirJob(Job* trabalho, int idJob, char nomeJob[], Operacao* operacoes);
+Job* inserirJob(Job* trabalho, int idJob, char nomeJob[]);
 Job* removerJob(Job* trabalho, int idJob);
 void minimoTempo(Job* trabalho, int idJob, Maquina* maquina);
 void maximoTempo(Job* trabalho, int idJob, Maquina* maquina);
