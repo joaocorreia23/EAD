@@ -62,10 +62,12 @@ void mostraTrabalhosMenu() {
 	printf("1. Adicionar um Trabalho\n");
 	printf("2. Remover um Trabalho\n");
 	printf("3. Listar Trabalhos \n");
-	printf("4. Minimo Tempo de um Trabalho \n");
-	printf("5. Máximo Tempo de um Trabalho \n");
-	printf("6. Média Tempo de um Trabalho \n");
-	printf("7. Exportar Trabalho \n");
+	printf("4. Associar Operação a um Job \n");
+	printf("5. Desassociar Operação a um Job \n");
+	printf("6. Minimo Tempo de um Trabalho \n");
+	printf("7. Máximo Tempo de um Trabalho \n");
+	printf("8. Média Tempo de um Trabalho \n");
+	printf("9. Exportar Trabalho \n");
 	printf("0. Sair! \n\n");
 
 	printf("*******************************************\n\n");
@@ -87,24 +89,18 @@ void close() {
 #pragma region OPERAÇÕES
 //Funções para fazer o CRUD das Operações
 
-Operacao* criaOperacao(Operacao* operacao, Job* trabalho) {
+Operacao* criaOperacao(Operacao* operacao) {
 	char name[MAXNOME];
 	float tempo;
-	int idJob , idOp = 0;
+	int idOp = 0;
 	Maquina* maquinas = NULL;
-
-	listarApenasJobs(trabalho);
-
-	printf("\nSelecione o ID do Trabalho (Job) para Adicionar a Operação: \n");
-	scanf("%s", &idJob);
-	printf("\n");
 
 	idOp = autoIdOp(idOp);
 
 	printf("Nome da Operação: ");
 	scanf("%s", &name);
 
-	return inserirOperacao(operacao, idJob, idOp, name, maquinas);
+	return inserirOperacao(operacao, idOp, name, maquinas);
 }
 
 Operacao* removeOperacao(Operacao* operacao) {
@@ -225,6 +221,40 @@ Job* removeJob(Job* trabalho) {
 
 
 	return removerJob(trabalho, idJob);
+}
+
+Job* associaOperacao(Job* trabalho, Operacao* operacao) {
+	int idJob, idOp = 0;
+
+	listarApenasOperacoes(operacao);
+
+	printf("ID da Operação Para Associar: ");
+	scanf("%d", &idOp);
+
+
+	listarApenasJobs(trabalho);
+
+	printf("ID do Job: ");
+	scanf("%d", &idJob);
+
+
+	return associarOperacao(trabalho, idOp, idJob);
+}
+
+Job* desassociaOperacao(Job* trabalho, Operacao* operacao) {
+	int idJob, idOp = 0;
+
+	listarApenasJobs(trabalho);
+
+	printf("ID do Job: ");
+	scanf("%d", &idJob);
+
+	listarApenasOperacoes(operacao);
+
+	printf("ID da Operação Para Associar: ");
+	scanf("%d", &idOp);
+
+	return desassociarOperacao(trabalho, idJob, idOp);
 }
 
 #pragma endregion

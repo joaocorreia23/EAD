@@ -51,7 +51,7 @@ void listarApenasOperacoes(Operacao* operacao) {
 }
 
 // Função para Criar um Novo Registo de uma Nova Operação
-Operacao* inserirOperacao(Operacao* operacao, int idJob, int idOp, char nome[]) {
+Operacao* inserirOperacao(Operacao* operacao, int idOp, char nome[]) {
 	Operacao* nova = (Operacao*)malloc(sizeof(Operacao));
 
 	if (nova != NULL) {
@@ -61,7 +61,6 @@ Operacao* inserirOperacao(Operacao* operacao, int idJob, int idOp, char nome[]) 
 			opAux2 = opAux;
 			opAux = opAux->seguinte;
 		}
-		nova->idJob = idJob;
 		nova->idOp = idOp;
 		strcpy(nova->nome, nome);
 		nova->maquinas = NULL;

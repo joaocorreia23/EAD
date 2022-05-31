@@ -9,7 +9,7 @@
 typedef struct job {
 	int idJob;
 	char nomeJob[MAXNOME];
-	struct operacao* operacoes;
+	struct jobOperation* operacoes;
 	struct job* seguinte;
 } Job;
 
@@ -29,3 +29,5 @@ void minimoTempo(Job* trabalho, int idJob, Maquina* maquina);
 void maximoTempo(Job* trabalho, int idJob, Maquina* maquina);
 void mediaTempo(Job* trabalho, int idJob, Maquina* maquina);
 void exportarJob(Job* trabalho, Maquina* maquina);
+Job* associarOperacao(Job* trabalho, int idJob, int idOp);
+Job* desassociarOperacao(Job* trabalho, int idJob, int idOp);

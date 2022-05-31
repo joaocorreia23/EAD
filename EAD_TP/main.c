@@ -90,9 +90,9 @@ main() {
 	// Inserção de Operações Predefinidas
 	Operacao* op = NULL;
 
-	op = inserirOperacao(op, 1, 1, "1");
-	op = inserirOperacao(op, 1, 2, "2");
-	op = inserirOperacao(op, 1, 3, "3");
+	op = inserirOperacao(op, 1, "1");
+	op = inserirOperacao(op, 2, "2");
+	op = inserirOperacao(op, 3, "3");
 
 	// Associação de Operações a Máquinas Predefinidas
 	op = associarMaquina(op, 1, 1);
@@ -233,18 +233,26 @@ main() {
 					system("pause");
 					break;
 				case 4:
-					minimoTempo(job, 1, maq);
+					job = associaOperacao(job, op);
 					system("pause");
 					break;
 				case 5:
-					maximoTempo(job, 1, maq);
+					job = desassociaOperacao(job, op);
 					system("pause");
 					break;
 				case 6:
-					mediaTempo(job, 1, maq);
+					minimoTempo(job, 1, maq);
 					system("pause");
 					break;
 				case 7:
+					maximoTempo(job, 1, maq);
+					system("pause");
+					break;
+				case 8:
+					mediaTempo(job, 1, maq);
+					system("pause");
+					break;
+				case 9:
 					exportarJob(job, maq);
 					system("pause");
 					break;
