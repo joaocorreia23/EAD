@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include "job.h"
 
-// Função para Listar todos os Jobs
+//Função para Listar todos os Jobs
 void listarJobs(Job* trabalho, Maquina* maquina, Operacao* operacao) {
 
 	Job* jobAux = trabalho;
@@ -55,8 +55,8 @@ void listarJobs(Job* trabalho, Maquina* maquina, Operacao* operacao) {
 			{
 				printf("\tSem operações associadas\n");
 			}
-			printf("=====================================================================================================\n");
-			printf("=====================================================================================================\n\n");
+			printf("=================================================================================================\n");
+			printf("=================================================================================================\n\n");
 			jobAux = jobAux->seguinte;
 		}
 	}
@@ -67,7 +67,7 @@ void listarJobs(Job* trabalho, Maquina* maquina, Operacao* operacao) {
 	printf("\n*************************************************************************************************\n");
 }
 
-// Funão para Listar Apenas os Jobs
+//Função para Listar Apenas os Jobs
 void listarApenasJobs(Job* trabalho) {
 	Job* jobAux = trabalho;
 	printf("********************************************\n");
@@ -82,7 +82,7 @@ void listarApenasJobs(Job* trabalho) {
 	printf("\n********************************************\n");
 }
 
-// Função para Adicionar Jobs
+//Função para Adicionar Jobs
 Job* inserirJob(Job* trabalho, int idJob, char nomeJob[]) {
 	Job* novo = (Job*)malloc(sizeof(Job));
 
@@ -98,7 +98,7 @@ Job* inserirJob(Job* trabalho, int idJob, char nomeJob[]) {
 	}
 }
 
-// Função para Remover Job por ID
+//Função para Remover Job por ID
 Job* removerJob(Job* trabalho, int idJob) {
 	//Declaração dos nodo's para armazenar a informação das operações
 	Job* nodoAtual = trabalho;
@@ -297,13 +297,75 @@ void mediaTempo(Job* trabalho, int idJob, Maquina* maquina) {
 }
 
 //Função Para Exportar todos os Dados de um Job
-void exportarJob(Job* trabalho, Maquina* maquina) {
+void exportarJob(Job* trabalho, Maquina* maquina, Operacao* operacao) {
 
 	remove("JobExported.txt");
 
 	FILE* exportFile = fopen("JobExported.txt", "a");
 
 	Job* jobAux = trabalho;
+
+	fprintf(exportFile, "*************************************************************************************************\n");
+	fprintf(exportFile, "*                                     LISTA DE TRABALHOS                                        *\n");
+	fprintf(exportFile, "*************************************************************************************************\n\n");
+
+
+	if (trabalho != NULL) {
+		while (jobAux != NULL)
+		{
+			fprintf(exportFile, "ID JOB: %d   Nome Trabalho: %s\n", jobAux->idJob, jobAux->nomeJob);
+			JobOperation* jobOpAux = jobAux->operacoes;
+			fprintf(exportFile, "------------------------------------------------------------------------------------------------\n");
+
+			if (jobOpAux != NULL) {
+				while (jobOpAux != NULL) {
+					Operacao* opAux = operacao;
+					while (opAux != NULL && opAux->idOp != jobOpAux->idOp)
+						opAux = opAux->seguinte;
+
+					fprintf(exportFile, "\tID: %d     Nome Operação: %s\n", opAux->idOp, opAux->nome);
+
+					OperacaoMaquina* maqAux = opAux->maquinas;
+					fprintf(exportFile, "------------------------------------------------------------------------------------------------\n");
+					if (maqAux != NULL) {
+						while (maqAux != NULL)
+						{
+							Maquina* maquinaAux = maquina;
+							while (maquinaAux != NULL && maquinaAux->idMaq != maqAux->idMaq)
+								maquinaAux = maquinaAux->seguinte;
+
+							if (maquinaAux != NULL)
+								fprintf(exportFile, "\t\tID: %d   Nome Máquina: %s     Tempo Máquina: %.2f     Localização: %s\n", maquinaAux->idMaq, maquinaAux->nomeMaquina, maquinaAux->tempoOp, maquinaAux->localizacao);
+
+							maqAux = maqAux->seguinte;
+						}
+					}
+					else
+					{
+						fprintf(exportFile, "\t\tSem maquinas associadas\n");
+					}
+					fprintf(exportFile, "------------------------------------------------------------------------------------------------\n");
+
+					jobOpAux = jobOpAux->seguinte;
+				}
+			}
+			else
+			{
+				fprintf(exportFile, "\tSem operações associadas\n");
+			}
+			fprintf(exportFile, "=================================================================================================\n");
+			fprintf(exportFile, "=================================================================================================\n\n");
+			jobAux = jobAux->seguinte;
+		}
+	}
+	else {
+		fprintf(exportFile, "Sem trabalhos a apresentar");
+	}
+
+	fprintf(exportFile, "\n*************************************************************************************************\n");
+
+
+	/*Job* jobAux = trabalho;
 
 	fprintf(exportFile, "*************************************************************************************************\n");
 	fprintf(exportFile, "*                                     LISTA DE TRABALHOS                                        *\n");
@@ -336,7 +398,7 @@ void exportarJob(Job* trabalho, Maquina* maquina) {
 		}
 		jobAux = jobAux->seguinte;
 	}
-	fprintf(exportFile, "\n************************************************************************************************\n");
+	fprintf(exportFile, "\n************************************************************************************************\n");*/
 
 	fclose(exportFile);
 

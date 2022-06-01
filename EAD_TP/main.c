@@ -259,7 +259,7 @@ main() {
 					system("pause");
 					break;
 				case 9:
-					exportarJob(job, maq);
+					exportarJob(job, maq, op);
 					system("pause");
 					break;
 

@@ -28,6 +28,6 @@ Job* removerJob(Job* trabalho, int idJob);
 void minimoTempo(Job* trabalho, int idJob, Maquina* maquina);
 void maximoTempo(Job* trabalho, int idJob, Maquina* maquina);
 void mediaTempo(Job* trabalho, int idJob, Maquina* maquina);
-void exportarJob(Job* trabalho, Maquina* maquina);
+void exportarJob(Job* trabalho, Maquina* maquina, Operacao* operacao);
 Job* associarOperacao(Job* trabalho, int idJob, int idOp);
 Job* desassociarOperacao(Job* trabalho, int idJob, int idOp);
