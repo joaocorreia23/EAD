@@ -324,7 +324,7 @@ Job* criaJob(Job* trabalho) {
 
 	idJob = autoIdJob(idJob);
 
-	printf("Nome da Trabalho (Job): ");
+	printf("Nome do Trabalho (Job): ");
 	scanf("%s", &nomeJob);
 
 	Job* jobAux = trabalho;
