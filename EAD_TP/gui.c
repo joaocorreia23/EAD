@@ -62,9 +62,9 @@ void mostraTrabalhosMenu() {
 	printf("3. Listar Trabalhos \n");
 	printf("4. Associar Operação a um Job \n");
 	printf("5. Desassociar Operação a um Job \n");
-	printf("6. Minimo Tempo de um Trabalho \n");
-	printf("7. Máximo Tempo de um Trabalho \n");
-	printf("8. Média Tempo de um Trabalho \n");
+	//printf("6. Minimo Tempo de um Trabalho \n");
+	//printf("7. Máximo Tempo de um Trabalho \n");
+	//printf("8. Média Tempo de um Trabalho \n");
 	printf("9. Exportar Trabalho \n");
 	printf("0. Sair! \n\n");
 

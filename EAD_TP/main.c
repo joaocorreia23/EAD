@@ -246,7 +246,7 @@ main() {
 					job = desassociaOperacao(job, op);
 					system("pause");
 					break;
-				case 6:
+				/*case 6:
 					minimoTempo(job, 1, maq);
 					system("pause");
 					break;
@@ -257,7 +257,7 @@ main() {
 				case 8:
 					mediaTempo(job, 1, maq);
 					system("pause");
-					break;
+					break;*/
 				case 9:
 					exportarJob(job, maq, op);
 					system("pause");
