@@ -28,8 +28,6 @@ void mostraMaquinasMenu() {
 
 	printf("1. Listar Máquinas \n");
 	printf("2. Inserir Nova Máquina \n");
-	//printf("3. Remover Máquina \n");
-	//printf("4. Alterar Máquina \n");
 	printf("0. Sair! \n\n");
 
 	printf("*******************************************\n\n");
@@ -144,7 +142,7 @@ Operacao* editaOperacao(Operacao* operacao) {
 }
 
 Operacao* associaMaquina(Operacao* operacao, Maquina* maquina) {
-	int idOp = 0, idMaq = 0;
+	int idOp = 0, idMaq = 0, found = 0;
 
 	do
 	{
@@ -190,17 +188,20 @@ Operacao* associaMaquina(Operacao* operacao, Maquina* maquina) {
 		}
 	} while (idMaq == 0);
 
-
+	// Verificação de Existencia de Máquinas já Associadas
 	Operacao* opAux = operacao;
-	while (opAux != NULL && opAux->idOp != idOp)
+	while (opAux != NULL) {
+		OperacaoMaquina* OpMaqAux = opAux->maquinas;
+		while (OpMaqAux != NULL) {
+			if (OpMaqAux->idOp == idOp && OpMaqAux->idMaq == idMaq) {
+				found = 1;
+			}
+			OpMaqAux = OpMaqAux->seguinte;
+		}
 		opAux = opAux->seguinte;
-
-	OperacaoMaquina* opMaqAux = opAux->maquinas;
-	while (opMaqAux != NULL && opMaqAux->idMaq != idMaq)
-		opMaqAux = opMaqAux->seguinte;
-
-	if (opMaqAux != NULL) {
-		printf("\n\nMáquina '%d' já está associada à operação '%d'\n", idMaq, idOp);
+	}
+	if (found == 1) {
+		printf("\n\nA Máquina '%d' já está associada a operação '%d'\n", idMaq, idOp);
 		return operacao;
 	}
 
@@ -208,7 +209,7 @@ Operacao* associaMaquina(Operacao* operacao, Maquina* maquina) {
 }
 
 Operacao* desassociaMaquina(Operacao* operacao, Maquina* maquina) {
-	int idOp = 0, idMaq = 0;
+	int idOp = 0, idMaq = 0, found = 0;
 
 	do
 	{
@@ -254,21 +255,26 @@ Operacao* desassociaMaquina(Operacao* operacao, Maquina* maquina) {
 		}
 	} while (idMaq == 0);
 
-
+	// Verificação de Existencia de Máquinas já não Associadas
 	Operacao* opAux = operacao;
-	while (opAux != NULL && opAux->idOp != idOp)
+	while (opAux != NULL) {
+		OperacaoMaquina* OpMaqAux = opAux->maquinas;
+		while (OpMaqAux != NULL) {
+			if (OpMaqAux->idOp == idOp && OpMaqAux->idMaq == idMaq) {
+				found = 1;
+			}
+			OpMaqAux = OpMaqAux->seguinte;
+		}
 		opAux = opAux->seguinte;
-
-	OperacaoMaquina* opMaqAux = opAux->maquinas;
-	while (opMaqAux != NULL && opMaqAux->idMaq != idMaq)
-		opMaqAux = opMaqAux->seguinte;
-
-	if (opMaqAux == NULL) {
-		printf("\n\nMáquina %d não está associada à operação %d\n", idMaq, idOp);
-		return operacao;
 	}
 
-	return desassociarMaquina(operacao, idOp, idMaq);
+	if (found == 1) {
+		return desassociarMaquina(operacao, idOp, idMaq);
+	}
+	else {
+		printf("\n\nA Máquina '%d' não está associada a operação '%d'\n", idMaq, idOp);
+		return operacao;
+	}
 }
 
 #pragma endregion
@@ -287,6 +293,15 @@ Maquina* criaMaquina(Maquina* maquina) {
 
 	printf("Nome da Máquina: ");
 	scanf("%s", &name);
+
+	Maquina* maqAux = maquina;
+	while (maqAux != NULL && strcmp(maqAux->nomeMaquina, name) != 0)
+		maqAux = maqAux->seguinte;
+
+	if (maqAux != NULL) {
+		printf("\n\Já existe uma Máquina com o nome '%s'\n", name);
+		return maquina;
+	}
 
 	printf("Tempo da Máquina: ");
 	scanf("%f", &tempoOp);
@@ -329,37 +344,139 @@ Job* removeJob(Job* trabalho) {
 }
 
 Job* associaOperacao(Job* trabalho, Operacao* operacao) {
-	int idJob, idOp = 0;
+	int idJob = 0, idOp = 0, found = 0;
 
-	listarApenasOperacoes(operacao);
+	do
+	{
+		listarApenasOperacoes(operacao);
 
-	printf("ID da Operação Para Associar: ");
-	scanf("%d", &idOp);
+		printf("ID da Operação Para Associar: ");
+		scanf("%d", &idOp);
 
+		Operacao* opAux = operacao;
+		while (opAux != NULL && opAux->idOp != idOp)
+			opAux = opAux->seguinte;
 
-	listarApenasJobs(trabalho);
+		if (opAux == NULL) {
+			idOp = 0;
+			system("cls");
+			printf("Escolha inválida\n");
+			system("pause");
+			system("cls");
+		}
+	} while (idOp == 0);
 
-	printf("ID do Job: ");
-	scanf("%d", &idJob);
+	system("cls");
 
+	do
+	{
+		printf("ID da Operação: %d\n", idOp);
+
+		listarApenasJobs(trabalho);
+
+		printf("ID do Job: ");
+		scanf("%d", &idJob);
+
+		Job* jobAux = trabalho;
+		while (jobAux != NULL && jobAux->idJob != idJob)
+			jobAux = jobAux->seguinte;
+
+		if (jobAux == NULL) {
+			idJob = 0;
+			system("cls");
+			printf("Escolha inválida\n");
+			system("pause");
+			system("cls");
+		}
+	} while (idJob == 0);
+
+	// Verificação de Existencia de Operações já Associadas
+	Job* jobAux = trabalho;
+	while (jobAux != NULL) {
+		JobOperation* JobOpAux = jobAux->operacoes;
+		while (JobOpAux != NULL) {
+			if (JobOpAux->idJob == idJob && JobOpAux->idOp == idOp) {
+				found = 1;
+			}
+			JobOpAux = JobOpAux->seguinte;
+		}
+		jobAux = jobAux->seguinte;
+	}
+	if (found == 1) {
+		printf("\n\nA Operação '%d' já está associada ao trabalho '%d'\n", idOp, idJob);
+		return trabalho;
+	}
 
 	return associarOperacao(trabalho, idOp, idJob);
 }
 
 Job* desassociaOperacao(Job* trabalho, Operacao* operacao) {
-	int idJob, idOp = 0;
+	int idJob, idOp = 0, found = 0;
 
-	listarApenasJobs(trabalho);
+	do
+	{
+		listarApenasJobs(trabalho);
 
-	printf("ID do Job: ");
-	scanf("%d", &idJob);
+		printf("ID do Job: ");
+		scanf("%d", &idJob);
 
-	listarApenasOperacoes(operacao);
+		Job* jobAux = trabalho;
+		while (jobAux != NULL && jobAux->idJob != idJob)
+			jobAux = jobAux->seguinte;
 
-	printf("ID da Operação Para Associar: ");
-	scanf("%d", &idOp);
+		if (jobAux == NULL) {
+			idJob = 0;
+			system("cls");
+			printf("Escolha inválida\n");
+			system("pause");
+			system("cls");
+		}
+	} while (idJob == 0);
 
-	return desassociarOperacao(trabalho, idJob, idOp);
+	system("cls");
+
+	do
+	{
+		printf("ID do Trabalho: %d\n", idJob);
+
+		listarApenasOperacoes(operacao);
+
+		printf("ID da Operação Para desassociar: ");
+		scanf("%d", &idOp);
+
+		Operacao* opAux = operacao;
+		while (opAux != NULL && opAux->idOp != idOp)
+			opAux = opAux->seguinte;
+
+		if (opAux == NULL) {
+			idOp = 0;
+			system("cls");
+			printf("Escolha inválida\n");
+			system("pause");
+			system("cls");
+		}
+	} while (idOp == 0);
+
+	// Verificação de Existencia de Operações já Associadas
+	Job* jobAux = trabalho;
+	while (jobAux != NULL) {
+		JobOperation* JobOpAux = jobAux->operacoes;
+		while (JobOpAux != NULL) {
+			if (JobOpAux->idJob == idJob && JobOpAux->idOp == idOp) {
+				found = 1;
+			}
+			JobOpAux = JobOpAux->seguinte;
+		}
+		jobAux = jobAux->seguinte;
+	}
+
+	if (found == 1) {
+		return desassociarOperacao(trabalho, idJob, idOp);
+	}
+	else {
+		printf("\n\nA Operação '%d' não está associada ao trabalho '%d'\n", idOp, idJob);
+		return trabalho;
+	}
 }
 
 #pragma endregion
