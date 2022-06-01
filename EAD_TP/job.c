@@ -124,6 +124,69 @@ Job* removerJob(Job* trabalho, int idJob) {
 	return(trabalho);
 }
 
+//Função para Associar Operação a um Job
+Job* associarOperacao(Job* trabalho, int idOp, int idJob) {
+	Job* nodoAtualTrabalho = trabalho;
+	Job* nodoAnteriorTrabalho;
+
+
+	while (nodoAtualTrabalho != NULL && nodoAtualTrabalho->idJob != idJob)
+	{
+		nodoAnteriorTrabalho = nodoAtualTrabalho;
+		nodoAtualTrabalho = nodoAnteriorTrabalho->seguinte;
+	}
+
+	if (nodoAtualTrabalho != NULL)
+	{
+		JobOperation* nova = (JobOperation*)malloc(sizeof(JobOperation));
+		nova->idOp = idOp;
+		nova->idJob = idJob;
+		nova->seguinte = nodoAtualTrabalho->operacoes;
+
+		nodoAtualTrabalho->operacoes = nova;
+	}
+
+	return trabalho;
+}
+
+//Função para Desassociar Operação a um Job
+Job* desassociarOperacao(Job* trabalho, int idJob, int idOp) {
+	Job* nodoAtualTrabalho = trabalho;
+	Job* nodoAnteriorTrabalho;
+
+	while (nodoAtualTrabalho != NULL && nodoAtualTrabalho->idJob != idJob)
+	{
+		nodoAnteriorTrabalho = nodoAtualTrabalho;
+		nodoAtualTrabalho = nodoAtualTrabalho->seguinte;
+	}
+
+	if (nodoAtualTrabalho != NULL)
+	{
+		JobOperation* nodoAtualjobOperation = nodoAtualTrabalho->operacoes;
+		JobOperation* nodoAnteriorjobOperation;
+
+		if (nodoAtualjobOperation->idOp == idOp) {
+			nodoAtualTrabalho->operacoes = nodoAtualjobOperation->seguinte;
+			free(nodoAtualjobOperation);
+		}
+		else {
+			nodoAnteriorjobOperation = nodoAtualTrabalho->operacoes; // Armazena a informação da operação 
+			nodoAtualjobOperation = nodoAnteriorjobOperation->seguinte; // Segue para a proxima operação 
+			while ((nodoAtualjobOperation != NULL) && (nodoAtualjobOperation->idOp != idOp)) {
+				nodoAnteriorjobOperation = nodoAtualjobOperation;
+				nodoAtualjobOperation = nodoAtualjobOperation->seguinte;
+			}
+			if (nodoAtualjobOperation != NULL)
+			{
+				nodoAnteriorjobOperation->seguinte = nodoAtualjobOperation->seguinte;
+				free(nodoAtualjobOperation);
+			}
+		}
+	}
+
+	return trabalho;
+}
+
 //Função para Calcular o Valor Mínimo para Completar um Job
 void minimoTempo(Job* trabalho, int idJob, Maquina* maquina) {
 
@@ -406,69 +469,5 @@ void exportarJob(Job* trabalho, Maquina* maquina, Operacao* operacao) {
 	printf("*                 TRABALHO EXPORTADO COM SUCESSO               *\n");
 	printf("****************************************************************\n");
 }
-
-//Função para Associar Operação a um Job
-Job* associarOperacao(Job* trabalho, int idOp, int idJob) {
-	Job* nodoAtualTrabalho = trabalho;
-	Job* nodoAnteriorTrabalho;
-
-
-	while (nodoAtualTrabalho != NULL && nodoAtualTrabalho->idJob != idJob)
-	{
-		nodoAnteriorTrabalho = nodoAtualTrabalho;
-		nodoAtualTrabalho = nodoAnteriorTrabalho->seguinte;
-	}
-
-	if (nodoAtualTrabalho != NULL)
-	{
-		JobOperation* nova = (JobOperation*)malloc(sizeof(JobOperation));
-		nova->idOp = idOp;
-		nova->idJob = idJob;
-		nova->seguinte = nodoAtualTrabalho->operacoes;
-
-		nodoAtualTrabalho->operacoes = nova;
-	}
-
-	return trabalho;
-}
-
-//Função para Desassociar Operação a um Job
-Job* desassociarOperacao(Job* trabalho, int idJob, int idOp) {
-	Job* nodoAtualTrabalho = trabalho;
-	Job* nodoAnteriorTrabalho;
-
-	while (nodoAtualTrabalho != NULL && nodoAtualTrabalho->idJob != idJob)
-	{
-		nodoAnteriorTrabalho = nodoAtualTrabalho;
-		nodoAtualTrabalho = nodoAtualTrabalho->seguinte;
-	}
-
-	if (nodoAtualTrabalho != NULL)
-	{
-		JobOperation* nodoAtualjobOperation = nodoAtualTrabalho->operacoes;
-		JobOperation* nodoAnteriorjobOperation;
-
-		if (nodoAtualjobOperation->idOp == idOp) {
-			nodoAtualTrabalho->operacoes = nodoAtualjobOperation->seguinte;
-			free(nodoAtualjobOperation);
-		}
-		else {
-			nodoAnteriorjobOperation = nodoAtualTrabalho->operacoes; // Armazena a informação da operação 
-			nodoAtualjobOperation = nodoAnteriorjobOperation->seguinte; // Segue para a proxima operação 
-			while ((nodoAtualjobOperation != NULL) && (nodoAtualjobOperation->idOp != idOp)) {
-				nodoAnteriorjobOperation = nodoAtualjobOperation;
-				nodoAtualjobOperation = nodoAtualjobOperation->seguinte;
-			}
-			if (nodoAtualjobOperation != NULL)
-			{
-				nodoAnteriorjobOperation->seguinte = nodoAtualjobOperation->seguinte;
-				free(nodoAtualjobOperation);
-			}
-		}
-	}
-
-	return trabalho;
-}
-
 
 

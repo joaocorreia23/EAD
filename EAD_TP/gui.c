@@ -3,7 +3,6 @@
 #include <stdlib.h>
 #include "gui.h"
 
-
 #pragma region MENUS
 
 void mostraMenu() {
@@ -328,17 +327,40 @@ Job* criaJob(Job* trabalho) {
 	printf("Nome da Trabalho (Job): ");
 	scanf("%s", &nomeJob);
 
+	Job* jobAux = trabalho;
+	while (jobAux != NULL && strcmp(jobAux->nomeJob, nomeJob) != 0)
+		jobAux = jobAux->seguinte;
+
+	if (jobAux != NULL) {
+		printf("\n\Já existe um trabalho com o nome '%s'\n", nomeJob);
+		return trabalho;
+	}
+
 	return inserirJob(trabalho, idJob, nomeJob, operacoes);
 }
 
 Job* removeJob(Job* trabalho) {
 	int idJob = 0;
 
-	listarApenasJobs(trabalho);
+	do
+	{
+		listarApenasJobs(trabalho);
 
-	printf("ID do Trabalho (Job) para Eliminar: ");
-	scanf("%d", &idJob);
+		printf("ID do Trabalho (Job) para Eliminar: ");
+		scanf("%d", &idJob);
 
+		Job* jobAux = trabalho;
+		while (jobAux != NULL && jobAux->idJob != idJob)
+			jobAux = jobAux->seguinte;
+
+		if (jobAux == NULL) {
+			idJob = 0;
+			system("cls");
+			printf("Escolha inválida\n");
+			system("pause");
+			system("cls");
+		}
+	} while (idJob == 0);
 
 	return removerJob(trabalho, idJob);
 }
